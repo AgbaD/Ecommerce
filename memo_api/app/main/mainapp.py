@@ -1,8 +1,11 @@
 #!/usr/bin/python3
 # Author:   @AgbaD | @agba_dr3
 
+from werkzeug.security import generate_password_hash, check_password_hash
 from flask import jsonify, request
+import uuid
 from . import main
+from .. import db
 from ..models import User, Memo
 
 
@@ -18,7 +21,17 @@ def get_all_users():
 
 @main.route("/api/create_acc", methods=["POST"])
 def create_acc():
-    pass
+    data = request.get_json()
+
+    name = data['name']
+    hash_password = generate_password_hash(data['password'])
+    email = data['email']
+    public_id = str(uuid.uuid4())
+
+    user = User(public_id=public_id, name=name, email=email,
+                password=hash_password)
+    db.session.add(user)
+    db.session.commit()
 
 
 @main.route("api/edit_user/<public_id>", methods=["PUT"])
