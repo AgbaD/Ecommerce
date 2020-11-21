@@ -35,14 +35,34 @@ def token_required(f):
 @main.route("/api/get_user/<public_id>", methods=["GET"])
 @token_required
 def get_user(current_user, public_id):
-    pass
+    if not current_user.admin:
+        return jsonify({"status": "error", "msg": "Can not perform action"}), 403
+
+    user = User.query.filter_by(public_id=public_id).first()
+    if not user:
+        return jsonify({"status": "error", "msg": "User not found"}), 404
+    data = {'email': user.email, 'name': user.name,
+            'admin': user.admin, "public_id": user.public_id,
+            "memos": {}}
+    memos = Memo.query.all()
+    if memos:
+        for memo in memos:
+            if memo.user_id == user.id:
+                data['memos'][memo.date] = memo.text
 
 
 @main.route("/api/get_me", methods=["GET"])
 @token_required
 def get_me(current_user):
     data = {'email': current_user.email, 'name': current_user.name,
-            'admin': current_user.admin}
+            'admin': current_user.admin, "public_id": current_user.public_id,
+            "memos": {}}
+
+    memos = Memo.query.all()
+    if memos:
+        for memo in memos:
+            if memo.user_id == current_user.id:
+                data['memos'][memo.date] = memo.text
 
     return jsonify(data)
 
@@ -102,9 +122,19 @@ def create_acc():
         return jsonify({"status": "error", "msg": "Internal Server Error"}), 500
 
 
-@main.route("/api/edit_user", methods=["PUT"])
-def edit_user():
-    pass
+@main.route("/api/edit_me", methods=["PUT"])
+@token_required
+def edit_me(current_user):
+    data = request.get_json()
+
+    if data['name']:
+        current_user.name = data['name']
+    if data['email']:
+        current_user.email = data['email']
+    if data['password']:
+        current_user.password = data['password']
+
+    return jsonify({'status': "Success", "msg": "User as successfully updated"})
 
 
 @main.route("/api/login", methods=["POST"])
