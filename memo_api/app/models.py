@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # Author:   @AgbaD | @agba_dr3
 
-from ..app import db
+from . import db
 
 
 class User(db.Model):
@@ -18,7 +18,7 @@ class User(db.Model):
 class Memo(db.Model):
     __tablename__ = "memo"
     id = db.Column(db.Integer, primary_key=True)
-    date = db.Column(db.Datetime)
+    date = db.Column(db.DateTime)
     text = db.Column(db.String)
     user_id = db.Column(db.Integer)
 
