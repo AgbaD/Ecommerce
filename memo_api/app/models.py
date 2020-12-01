@@ -14,6 +14,9 @@ class User(db.Model):
     admin = db.Column(db.Boolean, default=False)
     active = db.Column(db.Boolean, default=True)
 
+    def __repr__(self):
+        return f"User(name:{name}, email:{email}, public_id:{public_id})"
+
 
 class Memo(db.Model):
     __tablename__ = "memo"

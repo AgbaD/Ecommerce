@@ -50,6 +50,8 @@ def get_user(current_user, public_id):
             if memo.user_id == user.id:
                 data['memos'][memo.date] = memo.text
 
+    return jsonify(data)
+
 
 @main.route("/api/get_me", methods=["GET"])
 @token_required
@@ -133,6 +135,9 @@ def edit_me(current_user):
         current_user.email = data['email']
     if data['password']:
         current_user.password = data['password']
+    if data['admin']:
+        if data['admin'] == "True":
+            current_user.admin = True
 
     return jsonify({'status': "Success", "msg": "User as successfully updated"})
 
@@ -164,4 +169,31 @@ def login():
     })
 
 
+@main.route("/api/get_memo/<memo_id>", methods=['GET'])
+@token_required
+def get_memo(current_user, memo_id):
+    pass
 
+
+@main.route("/api/get_memos", methods=['GET'])
+@token_required
+def get_memos(current_user):
+    pass
+
+
+@main.route("/api/create_memo", methods=['POST'])
+@token_required
+def create_memos(current_user):
+    pass
+
+
+@main.route("/api/edit_memo/<memo_id>", methods=['PUT'])
+@token_required
+def edit_memos(current_user, memo_id):
+    pass
+
+
+@main.route("/api/delete_memo/<memo_id>", methods=['DELETE'])
+@token_required
+def delete_memos(current_user, memo_id):
+    pass
