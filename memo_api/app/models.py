@@ -23,5 +23,6 @@ class Memo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     date = db.Column(db.DateTime)
     text = db.Column(db.String)
+    title = db.Column(db.String)
     user_id = db.Column(db.Integer)
 

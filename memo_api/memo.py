@@ -2,8 +2,10 @@
 # Author:   @AgbaD | @agba_dr3
 
 from app import db, create_app
+from flask_migrate import Migrate
 
 app = create_app()
+migrate = Migrate(app, db)
 
 
 @app.shell_context_processor

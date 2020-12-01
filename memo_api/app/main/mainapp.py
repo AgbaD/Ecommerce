@@ -48,7 +48,7 @@ def get_user(current_user, public_id):
     if memos:
         for memo in memos:
             if memo.user_id == user.id:
-                data['memos'][memo.date] = memo.text
+                data['memos'][memo.id] = memo.title
 
     return jsonify(data)
 
@@ -64,7 +64,7 @@ def get_me(current_user):
     if memos:
         for memo in memos:
             if memo.user_id == current_user.id:
-                data['memos'][memo.date] = memo.text
+                data['memos'][memo.id] = memo.title
 
     return jsonify(data)
 
@@ -86,7 +86,7 @@ def get_all_users(current_user):
         if memos:
             for mem in memos:
                 if mem.user_id == user.id:
-                    data['memos'][mem.date] = mem.text
+                    data['memos'][mem.id] = mem.title
 
         output.append(data)
 
@@ -129,17 +129,19 @@ def create_acc():
 def edit_me(current_user):
     data = request.get_json()
 
-    if data['name']:
+    if "name" in data:
         current_user.name = data['name']
-    if data['email']:
+    if "email" in data:
         current_user.email = data['email']
-    if data['password']:
+    if "password" in data:
         current_user.password = data['password']
-    if data['admin']:
+    if "admin" in data:
         if data['admin'] == "True":
             current_user.admin = True
 
-    return jsonify({'status': "Success", "msg": "User as successfully updated"})
+    db.session.commit()
+
+    return jsonify({'status': "success", "msg": "User as successfully updated"})
 
 
 @main.route("/api/login", methods=["POST"])
@@ -172,13 +174,30 @@ def login():
 @main.route("/api/get_memo/<memo_id>", methods=['GET'])
 @token_required
 def get_memo(current_user, memo_id):
-    pass
+    memo = Memo.query.filter_by(id=memo_id).first()
+    if memo.user_id != current_user.id:
+        if not current_user.admin:
+            return jsonify({"status": "error", "msg": "Can not perform action"}), 403
+    if not memo:
+        return jsonify({'status': "error", "msg": "Memo not found"})
+
+    data = {"id": memo.id, "date": memo.date, "title": memo.title, "text": memo.text}
+
+    return jsonify(data)
 
 
 @main.route("/api/get_memos", methods=['GET'])
 @token_required
 def get_memos(current_user):
-    pass
+    memos = Memo.query.all()
+
+    data = {}
+    if memos:
+        for memo in memos:
+            if memo.user_id == current_user.id:
+                data[memo.id] = {"date": memo.date, "title": memo.title, "text": memo.text}
+
+    return jsonify(data)
 
 
 @main.route("/api/create_memo", methods=['POST'])
