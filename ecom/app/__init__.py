@@ -6,9 +6,12 @@ from flask_cors import CORS
 from flask_caching import Cache
 from config import config
 from flask_msearch import Search
+from flask_mysqldb import MySQL
 
 cache = Cache()
 search = Search()
+mysql = MySQL()
+
 
 def create_app(config_name):
     app = Flask(__name__)
@@ -21,6 +24,7 @@ def create_app(config_name):
 
     cache.init_app(app)
     search.init_app(app)
+    mysql.init_app(app)
     CORS(app)
 
     from .api import api

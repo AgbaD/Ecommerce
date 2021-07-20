@@ -2,12 +2,13 @@
 # Author:   @AgbaD || @agba_dr3
 
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask import jsonify, make_response, request
+from flask import jsonify, request, redirect
 
 import uuid
 import json
 
 from . import api
+from .. import mysql
 
 
 @api.route('/api/v1/login', methods=['POST'])
