@@ -2,10 +2,11 @@
 # Author:   @AgbaD || @agba_dr3
 
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask import jsonify, request, make_response, redirect
+from flask import jsonify, request, current_app
+import jwt
 
 import uuid
-import json
+from datetime import datetime, timedelta
 
 from . import api
 from .. import mysql
@@ -13,17 +14,48 @@ from .. import mysql
 
 @api.route('/api/v1/login', methods=['POST'])
 def login():
-    data = request.get_json()
+    if request.method == "POST":
+        data = request.get_json()
 
-    password = data['password']
-    email = data['email']
+        password = data['password']
+        email = data['email']
 
-    return ''
+        cur = mysql.connection.cursor()
+        cur.execute(
+            "SELECT * FROM users WHERE email={}".format(email)
+        )
+
+        user = cur.fetchone()
+        if not user:
+            return jsonify({
+                'status': 'error', 'status_code': 400, 'message': 'User not found'
+            })
+        cur.close()
+
+        if not check_password_hash(user.password_hash, password):
+            return jsonify({
+                'status': 'error', 'status_code': 400, 'message': 'Password is incorrect'
+            })
+
+        token = jwt.encode({
+            'public_id': user.public_id, 'exp': datetime.utcnow() + timedelta(minutes=90)
+        }, current_app.config['SECRET_KEY'])
+
+        return jsonify({
+            'status': 'success', 'status_code': 200, 'message': 'Login successful',
+            'data': {
+                'token': token.decode('UTF-8')
+            }
+        })
+    else:
+        return jsonify({
+            'status': 'error', 'status_code': 400, 'message': "Endpoint doesn't support GET requests"
+        })
 
 
 @api.route('/api/v1/register', methods=['POST'])
 def register():
-    if request.method == ['POST']:
+    if request.method == 'POST':
         try:
             data = request.get_json()
 
@@ -38,6 +70,22 @@ def register():
             if password != re_password:
                 return jsonify({
                     'status': 'error', 'status_code': 400, 'message': 'Passwords do not match'
+                })
+
+            cur = mysql.connection.cursor()
+            user = None
+            try:
+                cur.execute(
+                    "SELECT * FROM users WHERE email={}".format(email)
+                )
+                user = cur.fetchone()
+            except Exception as e:
+                print(e)
+
+            cur.close()
+            if user:
+                return jsonify({
+                    'status': 'error', 'status_code': 400, 'message': 'Email has ben used!'
                 })
 
             password_hash = generate_password_hash(password)
