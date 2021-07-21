@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # Author:   @AgbaD | @agba_dr3
 
-from ..app import db
+from . import db
 
 
 class User(db.Model):
@@ -14,11 +14,15 @@ class User(db.Model):
     admin = db.Column(db.Boolean, default=False)
     active = db.Column(db.Boolean, default=True)
 
+    def __repr__(self):
+        return f"User(name:{name}, email:{email}, public_id:{public_id})"
+
 
 class Memo(db.Model):
     __tablename__ = "memo"
     id = db.Column(db.Integer, primary_key=True)
-    date = db.Column(db.Datetime)
+    date = db.Column(db.DateTime)
     text = db.Column(db.String)
+    title = db.Column(db.String)
     user_id = db.Column(db.Integer)
 
