@@ -13,7 +13,7 @@ from .. import mysql
 from .utils import token_required
 
 
-@api.route('/api/v1/login', methods=['POST'])
+@api.route('/api/login', methods=['POST'])
 def login():
     if request.method == "POST":
         try:
@@ -59,7 +59,7 @@ def login():
         }), 400
 
 
-@api.route('/api/v1/register', methods=['POST'])
+@api.route('/api/register', methods=['POST'])
 def register():
     if request.method == 'POST':
         try:
@@ -82,7 +82,7 @@ def register():
             user = None
             try:
                 cur.execute(
-                    "SELECT * FROM users WHERE email={}".format(email)
+                    f"SELECT * FROM users WHERE email={email}"
                 )
                 user = cur.fetchone()
             except Exception as e:
