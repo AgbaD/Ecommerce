@@ -86,13 +86,13 @@ def get_all_products():
         }), 500
 
 
-@api.route('/api/get_category/<str:_name>', methods=['GET'])
+@api.route('/api/get_category/<str:category_name>', methods=['GET'])
 @cache.cached(timeout=300)
-def get_category(_name):
+def get_category(category_name):
     try:
         cur = mysql.connection.cursor()
         cur.execute(
-            f'SELECT * FROM products WHERE category={_name}'
+            f'SELECT * FROM products WHERE category={category_name}'
         )
         data = cur.fetchall()
         cur.close()
