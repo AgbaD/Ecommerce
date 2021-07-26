@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ae4d48a7-a4a5-4b1e-9562-57719894963e" name="Default Changelist" comment="mainapp dev">
-      <change afterPath="$PROJECT_DIR$/ecom/app/api/utils/schema.py" afterDir="false" />
+    <list default="true" id="ae4d48a7-a4a5-4b1e-9562-57719894963e" name="Default Changelist" comment="auth 67% done">
+      <change afterPath="$PROJECT_DIR$/ecom/app/api/payment.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ecom/app/api/utils/mail.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ecom/app/api/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/ecom/app/api/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ecom/app/api/auth.py" beforeDir="false" afterPath="$PROJECT_DIR$/ecom/app/api/auth.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ecom/app/api/mainapp.py" beforeDir="false" afterPath="$PROJECT_DIR$/ecom/app/api/mainapp.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ecom/app/models.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ecom/app/api/utils/schema.py" beforeDir="false" afterPath="$PROJECT_DIR$/ecom/app/api/utils/schema.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -130,7 +130,14 @@
       <option name="project" value="LOCAL" />
       <updated>1627035599741</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="auth 67% done">
+      <created>1627253259926</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1627253259926</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -152,6 +159,7 @@
     <MESSAGE value="authentication" />
     <MESSAGE value="jwt authentication" />
     <MESSAGE value="mainapp dev" />
-    <option name="LAST_COMMIT_MESSAGE" value="mainapp dev" />
+    <MESSAGE value="auth 67% done" />
+    <option name="LAST_COMMIT_MESSAGE" value="auth 67% done" />
   </component>
 </project>

@@ -93,6 +93,27 @@ userDbSchema = {
     'additionalProperties': False
 }
 
+productDbSchema = {
+    'type': 'object',
+    'properties': {
+        'name': {
+            'type': 'string'
+        },
+        'description': {
+            'type': 'string'
+        },
+        'datetime': {
+            'type': 'datetime'
+        },
+        'price': {
+            'type': 'string'
+        },
+        'category': {
+            'type': 'string'
+        }
+    }
+}
+
 
 def validate_login(user):
     try:

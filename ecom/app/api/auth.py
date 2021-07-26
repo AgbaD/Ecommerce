@@ -45,8 +45,14 @@ def login():
             if not user:
                 return jsonify({
                     'status': 'error',
-                    'message': 'User not found'
+                    'message': 'User account not found'
                 }), 401
+
+            if not user['is_active']:
+                return jsonify({
+                    'status': 'error',
+                    'message': 'User account not found'
+                }), 403
 
             if not check_password_hash(user['password_hash'], password):
                 return jsonify({
@@ -271,7 +277,6 @@ def delete_user(current_user):
 
 
 @api.route("/api/forgot_password", methods=['POST'])
-@token_required
 def forgot_password(current_user):
     if request.method == 'POST':
         pass
