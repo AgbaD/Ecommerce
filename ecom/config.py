@@ -18,6 +18,7 @@ class Config:
     PAYSTACK_KEY = ""
     PAYPAL_CLIENT_SECRET = ""
     PAYPAL_CLIENT_ID = ""
+    SSL_DISABLE = False
 
     @staticmethod
     def init_app(app):
