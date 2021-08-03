@@ -1,0 +1,12 @@
+{
+  "Merchant": {
+    "id": "int (private_key)",
+    "first_name": "string",
+    "last_name": "string",
+    "public_id": "string",
+    "email": "string",
+    "store_name": "string",
+    "phone_number": "int",
+    "password_hash": "string"
+  }
+}
