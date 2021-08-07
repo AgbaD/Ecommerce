@@ -9,7 +9,7 @@ class Merchant(db.Model):
     __tablename__ = "merchants"
     id = db.Column(db.Integer, primary_key=True)
     public_id = db.Column(db.String(256))
-    store_id = db.Column(db.Integer, default=None)
+    store_id = db.Column(db.Integer)
     first_name = db.Column(db.String(128))
     last_name = db.Column(db.String(128))
     email = db.Column(db.String(128))
@@ -34,7 +34,6 @@ class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     public_id = db.Column(db.String(256))
     store_id = db.Column(db.Integer)
-    merchant_id = db.Column(db.Integer)
     name = db.Column(db.String(128))
     description = db.Column(db.String(512))
     price = db.Column(db.Integer)

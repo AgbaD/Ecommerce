@@ -41,10 +41,47 @@ storeDb = {
     }
 }
 
+productDb = {
+    'type': 'object',
+    'properties': {
+        'store_id': {
+            'type': 'integer'
+        },
+        'name': {
+            'type': 'string'
+        },
+        'description': {
+            'type': 'string'
+        },
+        'price': {
+            'type': 'integer'
+        },
+        'denomination': {
+            'type': 'string'
+        },
+        'category': {
+            'type': 'string'
+        },
+        'tags': {
+            'type': 'object'
+        }
+    }
+}
+
 
 def validate_store(data):
     try:
         validate(data, storeDb)
+        return {'msg': 'success'}
+    except SchemaError as e:
+        return {'msg': 'error', 'error': e.message}
+    except ValidationError as e:
+        return {'msg': 'error', 'error': e.message}
+
+
+def validate_product(data):
+    try:
+        validate(data, productDb)
         return {'msg': 'success'}
     except SchemaError as e:
         return {'msg': 'error', 'error': e.message}

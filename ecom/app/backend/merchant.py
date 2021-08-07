@@ -8,6 +8,7 @@ from .. import db
 
 import uuid
 from ..utilities.schema import validate_merchant, validate_store
+from ..utilities.schema import validate_product
 
 
 def create_merchant(data=None):
@@ -60,9 +61,12 @@ def create_merchant(data=None):
 def create_store(data=None):
     if not data:
         return None, ""
-    name = data['name']
-    description = data['description']
-    tags = data['tags']
+    try:
+        name = data['name']
+        description = data['description']
+        tags = data['tags']
+    except Exception as e:
+        return None, e
 
     store = {
         'name': name,
@@ -89,25 +93,26 @@ def create_store(data=None):
     return 1, "Store Created!"
 
 
-def add_merchant_id(merchant_pid, store_id):
-    merchant = Merchant.query.filter_by(public_id=merchant_pid).first()
-    if not merchant:
-        return None, "Merchant not found!"
-    if merchant.store_id:
-        return None, "Merchant already has a store associated to it"
-    merchant.store_id = store_id
-    db.session.add(merchant)
+def add_merchant_id(store_pid, merchant_id):
+    store = Store.query.filter_by(public_id=store_pid).first()
+    if not store:
+        return None, ""
+    if store.merchant_id:
+        return None, ""
+    store.merchant_id = merchant_id
+    db.session.add(store)
     db.session.commit()
+    return 1, ""
 
 
 def deactivate_merchant(merchant_pid):
     merchant = Merchant.query.filter_by(public_id=merchant_pid).first()
     if not merchant:
-        return None, "Merchant not found"
+        return None, ""
     merchant.active = False
     db.session.add(merchant)
     db.session.commit()
-    return 1, "Merchant has been deactivated"
+    return 1, ""
 
 
 def deactivate_store(store_pid):
@@ -117,4 +122,99 @@ def deactivate_store(store_pid):
     store.active = False
     db.session.add(store)
     db.session.commit()
-    return 1, "Store has been deactivated"
+    return 1, ""
+
+
+def create_product(data):
+    if not data:
+        return None, ""
+    try:
+        store_id = data['store_id']
+        name = data['name']
+        description = data['description']
+        price = data['price']
+        denomination = data['denomination']
+        category = data['category']
+        tags = data['tags']
+    except Exception as e:
+        return None, e
+
+    prod = {
+        'store_id': store_id,
+        'name': name,
+        'description': description,
+        'price': price,
+        'denomination': denomination,
+        'category': category,
+        'tags': tags
+    }
+
+    schema = validate_product(prod)
+    if schema['msg'] != 'success':
+        return None, schema['error']
+
+    prod = Product.query.filter_by(name=name).first()
+    if prod and prod.store_id == store_id:
+        return None, ""
+
+    public_id = str(uuid.uuid4())
+    product = Product(
+        public_id=public_id,
+        store_id=store_id,
+        name=name,
+        description=description,
+        price=price,
+        denomination=denomination,
+        category=category,
+        tags=tags
+    )
+
+    db.session.add(product)
+    db.session.commit()
+    return 1, ""
+
+
+def update_products(product_pid, data):
+    product = Product.query.filter_by(public_id=product_pid).first()
+    if not product:
+        return None, ""
+    try:
+        name = data['name']
+        product.name = name
+    except Exception:
+        pass
+
+    try:
+        description = data['description']
+        product.description = description
+    except Exception:
+        pass
+
+    try:
+        price = data['price']
+        product.price = price
+    except Exception:
+        pass
+
+    try:
+        denomination = data['denomination']
+        product.denomination = denomination
+    except Exception:
+        pass
+
+    try:
+        category = data['category']
+        product.category = category
+    except Exception:
+        pass
+
+    try:
+        tags = data['tags']
+        product.tags = tags
+    except Exception:
+        pass
+
+    db.session.add(product)
+    db.session.commit()
+    return 1, ""
+
