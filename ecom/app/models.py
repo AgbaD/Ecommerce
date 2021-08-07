@@ -22,10 +22,11 @@ class Store(db.Model):
     __tablename__ = "stores"
     id = db.Column(db.Integer, primary_key=True)
     public_id = db.Column(db.String(256))
+    merchant_id = db.Column(db.Integer, defald=None)
     name = db.Column(db.String(128))
-    merchant_id = db.Column(db.Integer)
     description = db.Column(db.String(256))
-    active = db.Column(db.Boolean, default=True)
+    tags = db.Column(db.PickleType)
+    active = db.Column(db.Boolean, default=False)
 
 
 class Product(db.Model):

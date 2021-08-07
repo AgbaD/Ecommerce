@@ -22,9 +22,34 @@ merchantDb = {
         },
         'password': {
             'type': 'string'
+        },
+        'store_id': {
+            'type': 'integer'
         }
     }
 }
+
+storeDb = {
+    'type': "object",
+    'properties': {
+        'name': {
+            'type': 'string'
+        },
+        'description': {
+            'type': 'string'
+        }
+    }
+}
+
+
+def validate_store(data):
+    try:
+        validate(data, storeDb)
+        return {'msg': 'success'}
+    except SchemaError as e:
+        return {'msg': 'error', 'error': e.message}
+    except ValidationError as e:
+        return {'msg': 'error', 'error': e.message}
 
 
 def validate_merchant(data):
