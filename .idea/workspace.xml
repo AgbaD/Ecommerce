@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ae4d48a7-a4a5-4b1e-9562-57719894963e" name="Default Changelist" comment="restarting ecom api">
+    <list default="true" id="ae4d48a7-a4a5-4b1e-9562-57719894963e" name="Default Changelist" comment="db modelling">
+      <change afterPath="$PROJECT_DIR$/ecom/app/api/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ecom/app/api/main.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ecom/app/backend/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ecom/app/backend/merchant.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ecom/app/utilities/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ecom/app/utilities/schema.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ecom/app/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/ecom/app/models.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -160,7 +167,14 @@
       <option name="project" value="LOCAL" />
       <updated>1628018424786</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="db modelling">
+      <created>1628111457578</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1628111457578</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -186,6 +200,7 @@
     <MESSAGE value="crud implementation" />
     <MESSAGE value="restarting ecom" />
     <MESSAGE value="restarting ecom api" />
-    <option name="LAST_COMMIT_MESSAGE" value="restarting ecom api" />
+    <MESSAGE value="db modelling" />
+    <option name="LAST_COMMIT_MESSAGE" value="db modelling" />
   </component>
 </project>

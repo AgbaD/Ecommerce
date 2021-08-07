@@ -5,15 +5,40 @@ from . import db
 from datetime import datetime
 
 
-class Merchant:
+class Merchant(db.Model):
     __tablename__ = "merchants"
     id = db.Column(db.Integer, primary_key=True)
+    public_id = db.Column(db.String(256))
+    store_id = db.Column(db.Integer, default=None)
     first_name = db.Column(db.String(128))
     last_name = db.Column(db.String(128))
-    public_id = db.Column(db.String(128))
-    store_id = db.Column(db.String(128))
     email = db.Column(db.String(128))
     phone = db.Column(db.PickleType)
-    password_hash = db.Column(db.String(128))
+    password_hash = db.Column(db.String(256))
+    active = db.Column(db.Boolean, default=True)
+
+
+class Store(db.Model):
+    __tablename__ = "stores"
+    id = db.Column(db.Integer, primary_key=True)
+    public_id = db.Column(db.String(256))
+    name = db.Column(db.String(128))
+    merchant_id = db.Column(db.Integer)
+    description = db.Column(db.String(256))
+    active = db.Column(db.Boolean, default=True)
+
+
+class Product(db.Model):
+    __tablename__ = "products"
+    id = db.Column(db.Integer, primary_key=True)
+    public_id = db.Column(db.String(256))
+    store_id = db.Column(db.Integer)
+    merchant_id = db.Column(db.Integer)
+    name = db.Column(db.String(128))
+    description = db.Column(db.String(512))
+    price = db.Column(db.Integer)
+    denomination = db.Column(db.String(8))
+    category = db.Column(db.String(128))
+    tags = db.Column(db.PickleType)
 
 
