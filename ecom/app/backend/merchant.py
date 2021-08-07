@@ -2,8 +2,8 @@
 # Author:   @AgbaD || @agba_dr3
 import uuid
 
+from ..models import Merchant, Store, Product, Feedback
 from werkzeug.security import generate_password_hash
-from ..models import Merchant, Store, Product
 from .. import db
 
 import uuid
@@ -217,4 +217,26 @@ def update_products(product_pid, data):
     db.session.add(product)
     db.session.commit()
     return 1, ""
+
+
+def get_all_products(merchant_id):
+    products = Product.query.filter_by(merchant_id=merchant_id).all()
+    if not products:
+        return None, ""
+    return 1, products
+
+
+def get_all_feedback(merchant_id):
+    feedback = Feedback.query.filter_by(merchant_id=merchant_id).all()
+    if not feedback:
+        return None, ""
+    return 1, feedback
+
+
+def get_product_reviews(product_id):
+    product = Product.query.filter_by(product_id=product_id).first()
+    if not product:
+        return None, ""
+    reviews = product.reviews
+    return 1, reviews
 

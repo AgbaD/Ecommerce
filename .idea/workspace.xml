@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ae4d48a7-a4a5-4b1e-9562-57719894963e" name="Default Changelist" comment="merchant and store">
+    <list default="true" id="ae4d48a7-a4a5-4b1e-9562-57719894963e" name="Default Changelist" comment="merchant and store pure backend">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ecom/app/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/ecom/app/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ecom/app/backend/merchant.py" beforeDir="false" afterPath="$PROJECT_DIR$/ecom/app/backend/merchant.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ecom/app/db_schema.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/ecom/app/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/ecom/app/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ecom/app/utilities/schema.py" beforeDir="false" afterPath="$PROJECT_DIR$/ecom/app/utilities/schema.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -186,7 +183,14 @@
       <option name="project" value="LOCAL" />
       <updated>1628299579097</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="merchant and store pure backend">
+      <created>1628304185136</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1628304185136</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -215,6 +219,7 @@
     <MESSAGE value="db modelling" />
     <MESSAGE value="merchant backend" />
     <MESSAGE value="merchant and store" />
-    <option name="LAST_COMMIT_MESSAGE" value="merchant and store" />
+    <MESSAGE value="merchant and store pure backend" />
+    <option name="LAST_COMMIT_MESSAGE" value="merchant and store pure backend" />
   </component>
 </project>
