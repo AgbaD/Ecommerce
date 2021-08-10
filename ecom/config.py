@@ -12,7 +12,7 @@ class Config:
     SECRET_KEY = os.getenv('SECRET_KEY')
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
     SQLALCHEMY_TRACK_MODIFICATIONS = True
-    WTF_CSRF_SECRET_KEY = os.environ.get("WTF_CSRF_SECRET_KEY")
+    WTF_CSRF_SECRET_KEY = os.getenv("WTF_CSRF_SECRET_KEY")
 
     # Search Feature
     WHOOSH_BASE = os.path.join(basedir, "search.db")

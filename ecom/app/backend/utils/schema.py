@@ -68,6 +68,38 @@ productDb = {
     }
 }
 
+userDb = {
+    'type': 'object',
+    'properties': {
+        'email': {
+            'type': 'string',
+            'format': 'email'
+        },
+        'fullname': {
+            'type': 'string'
+        },
+        'phone': {
+            'type': 'integer'
+        },
+        'address': {
+            'type': 'string'
+        },
+        'password': {
+            'type': 'string'
+        }
+    }
+}
+
+
+def validate_user(data):
+    try:
+        validate(data, userDb)
+        return {'mag': 'success'}
+    except SchemaError as e:
+        return {'msg': 'error', 'error': e.message}
+    except ValidationError as e:
+        return {'msg': 'error', 'error': e.message}
+
 
 def validate_store(data):
     try:

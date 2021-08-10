@@ -1,14 +1,13 @@
 #!usr/bin/python3
 # Author:   @AgbaD || @agba_dr3
-import uuid
 
 from ..models import Merchant, Store, Product, Feedback
 from werkzeug.security import generate_password_hash
 from .. import db
 
 import uuid
-from ..utilities.schema import validate_merchant, validate_store
-from ..utilities.schema import validate_product
+from .utils.schema import validate_merchant, validate_store
+from .utils.schema import validate_product
 
 
 def create_merchant(data=None):
@@ -174,7 +173,7 @@ def create_product(data):
     return 1, ""
 
 
-def update_products(product_pid, data):
+def update_product(product_pid, data):
     product = Product.query.filter_by(public_id=product_pid).first()
     if not product:
         return None, ""

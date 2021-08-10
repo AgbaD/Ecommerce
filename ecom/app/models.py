@@ -55,3 +55,19 @@ class Feedback(db.Model):
     merchant_id = db.Column(db.Integer)
     content = db.Column(db.String(2048))
     datetime = db.Column(db.DateTime, default=datetime.utcnow())
+
+
+class User(db.Model):
+    __tablename__ = 'users'
+    id = db.Column(db.Integer, primary_key=True)
+    public_id = db.Column(db.String(256))
+    email = db.Column(db.String(128))
+    fullname = db.Column(db.String(128))
+    phone = db.Column(db.Integer)
+    address = db.Column(db.String(256))
+    password_hash = db.Column(db.string(256))
+
+
+class Order(db.Model):
+    pass
+
