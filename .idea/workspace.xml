@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ae4d48a7-a4a5-4b1e-9562-57719894963e" name="Default Changelist" comment="lets go ball 4:20">
-      <change afterPath="$PROJECT_DIR$/ecom/app/backend/misc.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ecom/app/backend/user.py" afterDir="false" />
+    <list default="true" id="ae4d48a7-a4a5-4b1e-9562-57719894963e" name="Default Changelist" comment="working on it">
+      <change afterPath="$PROJECT_DIR$/ecom/app/api/utils/auth.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ecom/app/api/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/ecom/app/api/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ecom/app/backend/merchant.py" beforeDir="false" afterPath="$PROJECT_DIR$/ecom/app/backend/merchant.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ecom/app/backend/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/ecom/app/backend/user.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ecom/app/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/ecom/app/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ecom/app/utilities/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/ecom/app/backend/utils/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ecom/app/utilities/schema.py" beforeDir="false" afterPath="$PROJECT_DIR$/ecom/app/backend/utils/schema.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ecom/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/ecom/config.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -208,7 +204,14 @@
       <option name="project" value="LOCAL" />
       <updated>1628305552940</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="working on it">
+      <created>1628555532096</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1628555532096</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -239,6 +242,7 @@
     <MESSAGE value="merchant and store" />
     <MESSAGE value="merchant and store pure backend" />
     <MESSAGE value="lets go ball 4:20" />
-    <option name="LAST_COMMIT_MESSAGE" value="lets go ball 4:20" />
+    <MESSAGE value="working on it" />
+    <option name="LAST_COMMIT_MESSAGE" value="working on it" />
   </component>
 </project>

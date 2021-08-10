@@ -68,6 +68,10 @@ class User(db.Model):
     password_hash = db.Column(db.string(256))
 
 
-class Order(db.Model):
-    pass
+class Admin(db.Model):
+    __tablename__ = 'admin'
+    id = db.Column(db.Integer, primary_key=True)
+    public_id = db.Column(db.String(256))
+    email = db.Column(db.String(128))
+    password_hash = db.Column(db.String(128))
 
