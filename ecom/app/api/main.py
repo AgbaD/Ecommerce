@@ -4,9 +4,9 @@
 from flask import jsonify, request, current_app
 from . import api
 import jwt
-from ..backend.user import login_user
-from .utils.auth import token_required
 from datetime import datetime, timedelta
+from ..backend.user import login_user, create_user
+from .utils.auth import token_required, admin_required, merchant_required
 
 
 @api.route("/index", methods=['GET'])
@@ -18,7 +18,7 @@ def index():
 
 @api.route('/user/login', methods=['POST'])
 def user_login():
-    if request.method == 'POST':
+    try:
         data = request.get_json()
 
         email = data['email'].lower()
@@ -50,12 +50,41 @@ def user_login():
             }
         }), 200
 
-    return jsonify({
-        'status': 'error',
-        'msg': f"Endpoint doesnt support {request.method} requests"
-    }), 400
+    except Exception as e:
+        return jsonify({
+            'status': 'error',
+            'msg': e
+        }), 400
 
 
 @api.route('/user/register', methods=['POST'])
 def user_register():
     data = request.get_json()
+
+    email = data['email']
+    fullname = data['fullname']
+    password = data['password']
+    repeat_password = data['repeat_password']
+    phone = data['phone']
+    address = data['address']
+
+    info = {
+        'email': email,
+        'password': password,
+        'repeat_password': repeat_password,
+        'fullname': fullname,
+        'phone': phone,
+        'address': address
+    }
+
+    resp = create_user(info)
+    if resp['status'] != 'success':
+        return jsonify({
+            'status': 'error',
+            'msg': resp['msg']
+        }), 400
+
+    return jsonify({
+        'status': 'success',
+        'msg': "user has been created successfully!"
+    })

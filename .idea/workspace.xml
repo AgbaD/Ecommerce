@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ae4d48a7-a4a5-4b1e-9562-57719894963e" name="Default Changelist" comment="working on it">
-      <change afterPath="$PROJECT_DIR$/ecom/app/api/utils/auth.py" afterDir="false" />
+    <list default="true" id="ae4d48a7-a4a5-4b1e-9562-57719894963e" name="Default Changelist" comment="user suite">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ecom/app/api/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/ecom/app/api/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ecom/app/backend/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/ecom/app/backend/user.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ecom/app/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/ecom/app/models.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -211,7 +208,14 @@
       <option name="project" value="LOCAL" />
       <updated>1628555532096</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="user suite">
+      <created>1628563176889</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1628563176889</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -243,6 +247,7 @@
     <MESSAGE value="merchant and store pure backend" />
     <MESSAGE value="lets go ball 4:20" />
     <MESSAGE value="working on it" />
-    <option name="LAST_COMMIT_MESSAGE" value="working on it" />
+    <MESSAGE value="user suite" />
+    <option name="LAST_COMMIT_MESSAGE" value="user suite" />
   </component>
 </project>
