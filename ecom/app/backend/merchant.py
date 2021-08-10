@@ -1,27 +1,29 @@
 #!usr/bin/python3
 # Author:   @AgbaD || @agba_dr3
 
+from werkzeug.security import generate_password_hash, check_password_hash
 from ..models import Merchant, Store, Product, Feedback
-from werkzeug.security import generate_password_hash
 from .. import db
 
 import uuid
-from .utils.schema import validate_merchant, validate_store
 from .utils.schema import validate_product
+from .utils.schema import validate_merchant, validate_store
 
 
-def create_merchant(data=None):
-    if not data:
-        return None, ""
+def create_merchant(data):
     try:
         f_name = data['firstname']
         l_name = data['lastname']
         email = data['email']
         phone = data['phone']
         password = data['password']
+        repeat_password = data['repeat_password']
         store_id = data['store_id']
     except Exception as e:
-        return None, e
+        return {
+            "status": 'error',
+            'msg': e
+        }
 
     mern = {
         'f_name': f_name,
@@ -32,13 +34,25 @@ def create_merchant(data=None):
         'store_id': store_id
     }
 
+    if password != repeat_password:
+        return {
+            "status": 'error',
+            'msg': "Passwords do not match"
+        }
+
     schema = validate_merchant(mern)
     if schema['msg'] != 'success':
-        return None, schema['error']
+        return {
+            "status": 'error',
+            'msg': schema['error']
+        }
 
     merchant = Merchant.query.filter_by(email=email).first()
     if merchant:
-        return None, "Email has already been used"
+        return {
+            "status": 'error',
+            'msg': "Email has already been used"
+        }
 
     password_hash = generate_password_hash(password)
     public_id = str(uuid.uuid4())
@@ -54,18 +68,24 @@ def create_merchant(data=None):
     )
     db.session.add(merchant)
     db.session.commit()
-    return 1, "Merchant Created!"
+    return {
+        'status': "success",
+        'data': {
+            'merchant': merchant
+        }
+    }
 
 
-def create_store(data=None):
-    if not data:
-        return None, ""
+def create_store(data):
     try:
         name = data['name']
         description = data['description']
         tags = data['tags']
     except Exception as e:
-        return None, e
+        return {
+            "status": 'error',
+            'msg': e
+        }
 
     store = {
         'name': name,
@@ -74,11 +94,17 @@ def create_store(data=None):
 
     schema = validate_store(store)
     if schema['msg'] != 'success':
-        return None, schema['error']
+        return {
+            "status": 'error',
+            'msg': schema['error']
+        }
 
     store = Store.query.filter_by(name=name).first()
     if store:
-        return None, "Store name has already been used"
+        return {
+            "status": 'error',
+            'msg': "Store name has already been used"
+        }
 
     public_id = str(uuid.uuid4())
     store = Store(
@@ -89,44 +115,100 @@ def create_store(data=None):
     )
     db.session.add(store)
     db.session.commit()
-    return 1, "Store Created!"
+    return {
+        'status': "success",
+        'data': {
+            'store': store
+        }
+    }
 
 
 def add_merchant_id(store_pid, merchant_id):
     store = Store.query.filter_by(public_id=store_pid).first()
     if not store:
-        return None, ""
-    if store.merchant_id:
-        return None, ""
+        return {
+            "status": 'error',
+            'msg': "Store not found"
+        }
+    if store.merchant_id:   # should never happen
+        return {
+            "status": 'error',
+            'msg': "Store already has a merchant id"
+        }
     store.merchant_id = merchant_id
     db.session.add(store)
     db.session.commit()
-    return 1, ""
+    return {
+        "status": 'success',
+        'msg': "Merchant id added successfully"
+    }
+
+
+def login_merchant(data):
+    email = data['email']
+    password = data['password']
+
+    # check email using regex
+
+    merchant = Merchant.query.filter_by(email=email).first()
+    if not merchant:
+        return {
+            'status': 'error',
+            'msg': "Merchant not found"
+        }
+
+    if check_password_hash(merchant.password_hash, password):
+        return {
+            'status': 'success',
+            'data': {
+                'public_id': merchant.public_id
+            }
+        }
+
+    return {
+        'status': 'error',
+        'msg': 'Password is incorrect'
+    }
 
 
 def deactivate_merchant(merchant_pid):
     merchant = Merchant.query.filter_by(public_id=merchant_pid).first()
     if not merchant:
-        return None, ""
+        return {
+            "status": 'error',
+            'msg': "Merchant not found"
+        }
     merchant.active = False
     db.session.add(merchant)
     db.session.commit()
-    return 1, ""
+    return {
+        "status": 'success',
+        'msg': "Merchant deactivated successfully"
+    }
 
 
 def deactivate_store(store_pid):
     store = Store.query.filter_by(public_id=store_pid).first()
     if not store:
-        return None, "Store not found"
+        return {
+            "status": 'error',
+            'msg': "Store not found"
+        }
     store.active = False
     db.session.add(store)
     db.session.commit()
-    return 1, ""
+    return {
+        "status": 'success',
+        'msg': "Store deactivated successfully"
+    }
 
 
 def create_product(data):
     if not data:
-        return None, ""
+        return {
+            'status': 'error',
+            'msg': "data not found"
+        }
     try:
         store_id = data['store_id']
         name = data['name']
@@ -136,7 +218,10 @@ def create_product(data):
         category = data['category']
         tags = data['tags']
     except Exception as e:
-        return None, e
+        return {
+            'status': 'error',
+            'msg': e
+        }
 
     prod = {
         'store_id': store_id,
@@ -150,11 +235,17 @@ def create_product(data):
 
     schema = validate_product(prod)
     if schema['msg'] != 'success':
-        return None, schema['error']
+        return {
+            'status': 'error',
+            'msg': schema['error']
+        }
 
     prod = Product.query.filter_by(name=name).first()
     if prod and prod.store_id == store_id:
-        return None, ""
+        return {
+            'status': 'error',
+            'msg': "Product with same name already created"
+        }
 
     public_id = str(uuid.uuid4())
     product = Product(
@@ -170,13 +261,22 @@ def create_product(data):
 
     db.session.add(product)
     db.session.commit()
-    return 1, ""
+    return {
+        "status": 'success',
+        'msg': 'Product successfully created',
+        'data': {
+            'product': product
+        }
+    }
 
 
 def update_product(product_pid, data):
     product = Product.query.filter_by(public_id=product_pid).first()
     if not product:
-        return None, ""
+        return {
+            'status': 'error',
+            'msg': 'Product not found'
+        }
     try:
         name = data['name']
         product.name = name
@@ -215,27 +315,59 @@ def update_product(product_pid, data):
 
     db.session.add(product)
     db.session.commit()
-    return 1, ""
+    return {
+        'status': 'success',
+        'msg': 'Product updated successfully'
+    }
 
 
 def get_all_products(merchant_id):
     products = Product.query.filter_by(merchant_id=merchant_id).all()
     if not products:
-        return None, ""
-    return 1, products
+        return {
+            'status': 'error',
+            'msg': "Products not found"
+        }
+    return {
+        'status': 'success',
+        'data': {
+            'products': products
+        }
+    }
 
 
 def get_all_feedback(merchant_id):
     feedback = Feedback.query.filter_by(merchant_id=merchant_id).all()
     if not feedback:
-        return None, ""
-    return 1, feedback
+        return {
+            'status': 'error',
+            'msg': "Feedbacks not found"
+        }
+    return {
+        'status': 'success',
+        'data': {
+            'feedback': feedback
+        }
+    }
 
 
 def get_product_reviews(product_id):
     product = Product.query.filter_by(product_id=product_id).first()
     if not product:
-        return None, ""
+        return {
+            'status': 'error',
+            'msg': "Product not found"
+        }
     reviews = product.reviews
-    return 1, reviews
+    if not reviews:
+        return {
+            'status': 'error',
+            'msg': "Product review not found"
+        }
+    return {
+            'status': 'success',
+            'data': {
+                'reviews': reviews
+            }
+        }
 
