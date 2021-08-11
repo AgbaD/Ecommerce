@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ae4d48a7-a4a5-4b1e-9562-57719894963e" name="Default Changelist" comment="merchant authentication">
+    <list default="true" id="ae4d48a7-a4a5-4b1e-9562-57719894963e" name="Default Changelist" comment="creating products">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ecom/app/api/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/ecom/app/api/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ecom/app/api/utils/auth.py" beforeDir="false" afterPath="$PROJECT_DIR$/ecom/app/api/utils/auth.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ecom/app/backend/merchant.py" beforeDir="false" afterPath="$PROJECT_DIR$/ecom/app/backend/merchant.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ecom/app/backend/utils/schema.py" beforeDir="false" afterPath="$PROJECT_DIR$/ecom/app/backend/utils/schema.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ecom/app/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/ecom/app/models.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -233,7 +229,14 @@
       <option name="project" value="LOCAL" />
       <updated>1628637471527</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="creating products">
+      <created>1628646220817</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1628646220817</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -267,6 +270,7 @@
     <MESSAGE value="working on it" />
     <MESSAGE value="user suite" />
     <MESSAGE value="merchant authentication" />
-    <option name="LAST_COMMIT_MESSAGE" value="merchant authentication" />
+    <MESSAGE value="creating products" />
+    <option name="LAST_COMMIT_MESSAGE" value="creating products" />
   </component>
 </project>

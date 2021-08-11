@@ -270,6 +270,10 @@ def create_product(data):
     }
 
 
+def get_product(product_pid):
+    pass
+
+
 def update_product(product_pid, data):
     product = Product.query.filter_by(public_id=product_pid).first()
     if not product:
