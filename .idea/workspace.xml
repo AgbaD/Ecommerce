@@ -3,7 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="ae4d48a7-a4a5-4b1e-9562-57719894963e" name="Default Changelist" comment="creating products">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ecom/app/api/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/ecom/app/api/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ecom/app/backend/merchant.py" beforeDir="false" afterPath="$PROJECT_DIR$/ecom/app/backend/merchant.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ecom/app/backend/misc.py" beforeDir="false" afterPath="$PROJECT_DIR$/ecom/app/backend/misc.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -236,7 +238,14 @@
       <option name="project" value="LOCAL" />
       <updated>1628646220817</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="creating products">
+      <created>1628648666821</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1628648666821</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

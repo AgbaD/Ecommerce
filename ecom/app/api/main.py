@@ -4,6 +4,7 @@
 from flask import jsonify, request, current_app
 from . import api
 import jwt
+from ..backend.misc import get_product
 from datetime import datetime, timedelta
 from ..backend.user import login_user, create_user
 from .utils.auth import token_required, admin_required, merchant_required
@@ -251,3 +252,44 @@ def add_product(merchant):
             'msg': e
         }), 400
 
+
+@api.route('/merchant/update_product/<product_pid>', methods=['POST'])
+def edit_product(product_pid):
+    data = request.get_json()
+
+    name = data['name']
+    description = data['description']
+    price = data['price']
+    denomination = data['denomination']
+    category = data['category']
+    tags = data['tags']
+
+    k_keys = [name, description, price, denomination, category, tags]
+    keys = [i for i in k_keys if i]
+    i = 0
+    product = {}
+    while i < len(keys):
+        product[i] = {}
+
+
+@api.route('/get/product/<product_pid>', methods=['GET'])
+def fetch_product(product_pid):
+    try:
+        product = get_product({'product_pid': product_pid})
+
+        if product['status'] == 'success':
+            return jsonify({
+                'status': 'success',
+                'data': {
+                    'product': product['data']
+                }
+            }), 200
+        return jsonify({
+            'status': 'error',
+            'msg': product['msg']
+        }), 400
+    except Exception as e:
+        return jsonify({
+            'status': 'error',
+            'msg': e
+        }), 400
