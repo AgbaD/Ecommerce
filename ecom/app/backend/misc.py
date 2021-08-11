@@ -18,3 +18,18 @@ def get_product(data):
         'status': 'success',
         'data': product
     }
+
+
+def get_all_products():
+    products = Product.query.all()
+    if not products:
+        return {
+            'status': 'error',
+            'msg': "Products not found"
+        }
+    return {
+        'status': 'success',
+        'data': {
+            'products': products
+        }
+    }

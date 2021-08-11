@@ -321,7 +321,7 @@ def update_product(product_pid, data):
     }
 
 
-def get_all_products(merchant_id):
+def get_all_merchant_products(merchant_id):
     products = Product.query.filter_by(merchant_id=merchant_id).all()
     if not products:
         return {
