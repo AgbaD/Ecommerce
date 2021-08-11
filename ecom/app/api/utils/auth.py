@@ -80,13 +80,13 @@ def merchant_required(f):
         try:
             data = jwt.decode(token, current_app.config['SECRET_KEY'],
                               algorithms=['HS256'])
-            admin = Merchant.query.filter_by(public_id=data['public_id']).first()
+            merchant = Merchant.query.filter_by(public_id=data['public_id']).first()
         except Exception:
             return jsonify({
                 'status': 'error',
                 'msg': 'Token is invalid'
             }), 401
 
-        return f(admin, *args, **kwargs)
+        return f(merchant, *args, **kwargs)
     return decorated
 

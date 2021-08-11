@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ae4d48a7-a4a5-4b1e-9562-57719894963e" name="Default Changelist" comment="">
+    <list default="true" id="ae4d48a7-a4a5-4b1e-9562-57719894963e" name="Default Changelist" comment="merchant authentication">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ecom/app/api/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/ecom/app/api/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ecom/app/api/utils/auth.py" beforeDir="false" afterPath="$PROJECT_DIR$/ecom/app/api/utils/auth.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ecom/app/backend/merchant.py" beforeDir="false" afterPath="$PROJECT_DIR$/ecom/app/backend/merchant.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ecom/app/backend/utils/schema.py" beforeDir="false" afterPath="$PROJECT_DIR$/ecom/app/backend/utils/schema.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ecom/app/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/ecom/app/models.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -223,7 +226,14 @@
       <option name="project" value="LOCAL" />
       <updated>1628563888886</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="merchant authentication">
+      <created>1628637471527</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1628637471527</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -256,6 +266,7 @@
     <MESSAGE value="lets go ball 4:20" />
     <MESSAGE value="working on it" />
     <MESSAGE value="user suite" />
-    <option name="LAST_COMMIT_MESSAGE" value="" />
+    <MESSAGE value="merchant authentication" />
+    <option name="LAST_COMMIT_MESSAGE" value="merchant authentication" />
   </component>
 </project>

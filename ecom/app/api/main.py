@@ -8,7 +8,7 @@ from datetime import datetime, timedelta
 from ..backend.user import login_user, create_user
 from .utils.auth import token_required, admin_required, merchant_required
 from ..backend.merchant import create_merchant, create_store, add_merchant_id
-from ..backend.merchant import login_merchant
+from ..backend.merchant import login_merchant, create_product
 
 
 @api.route("/index", methods=['GET'])
@@ -16,6 +16,9 @@ def index():
     return jsonify({
         'msg': 'You are connected!'
     }), 200
+
+
+# User
 
 
 @api.route('/user/login', methods=['POST'])
@@ -96,6 +99,9 @@ def user_register():
             'status': 'error',
             'msg': e
         }), 400
+
+
+# Merchant
 
 
 @api.route("/merchant/register", methods=['POST'])
@@ -196,6 +202,49 @@ def merchant_login():
                 'token': token
             }
         }), 200
+    except Exception as e:
+        return jsonify({
+            'status': 'error',
+            'msg': e
+        }), 400
+
+
+@api.route("/merchant/create_product", methods=['POST'])
+@merchant_required
+def add_product(merchant):
+    try:
+        data = request.get_json()
+
+        name = data['name']
+        description = data['description']
+        price = data['price']
+        denomination = data['denomination']
+        category = data['category']
+        tags = data['tags']
+
+        merchant_id = merchant.id
+
+        prod = {
+            'merchant_id': merchant_id,
+            'name': name,
+            'description': description,
+            'price': price,
+            'denomination': denomination,
+            'category': category,
+            'tags': tags
+        }
+
+        resp = create_product(prod)
+        if resp['status'] != 'success':
+            return jsonify({
+                'status': 'error',
+                'msg': resp['msg']
+            }), 400
+
+        return jsonify({
+            "status": 'success',
+            'msg': 'Product successfully created'
+        }), 201
     except Exception as e:
         return jsonify({
             'status': 'error',

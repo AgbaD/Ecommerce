@@ -28,6 +28,7 @@ class Store(db.Model):
     tags = db.Column(db.PickleType)
     date_created = db.Column(db.Datetime)
     active = db.Column(db.Boolean, default=False)
+    is_verified = db.Column(db.Boolean, default=False)
 
     def __init__(self, **kwargs):
         super(Store, self).__init__(**kwargs)
@@ -66,6 +67,8 @@ class User(db.Model):
     phone = db.Column(db.Integer)
     address = db.Column(db.String(256))
     password_hash = db.Column(db.string(256))
+    active = db.Column(db.Boolean, default=False)
+    is_verified = db.Column(db.Boolean, default=False)
 
 
 class Admin(db.Model):

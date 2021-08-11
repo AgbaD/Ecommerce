@@ -210,7 +210,7 @@ def create_product(data):
             'msg': "data not found"
         }
     try:
-        store_id = data['store_id']
+        merchant_id = data['merchant_id']
         name = data['name']
         description = data['description']
         price = data['price']
@@ -224,7 +224,7 @@ def create_product(data):
         }
 
     prod = {
-        'store_id': store_id,
+        'merchant_id': merchant_id,
         'name': name,
         'description': description,
         'price': price,
@@ -241,7 +241,7 @@ def create_product(data):
         }
 
     prod = Product.query.filter_by(name=name).first()
-    if prod and prod.store_id == store_id:
+    if prod and prod.merchant_id == merchant_id:
         return {
             'status': 'error',
             'msg': "Product with same name already created"
@@ -250,7 +250,7 @@ def create_product(data):
     public_id = str(uuid.uuid4())
     product = Product(
         public_id=public_id,
-        store_id=store_id,
+        merchant_id=merchant_id,
         name=name,
         description=description,
         price=price,

@@ -44,7 +44,7 @@ storeDb = {
 productDb = {
     'type': 'object',
     'properties': {
-        'store_id': {
+        'merchant_id': {
             'type': 'integer'
         },
         'name': {
