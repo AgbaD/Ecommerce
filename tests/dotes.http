@@ -1,0 +1,4 @@
+POST http://127.0.0.1:5000/register HTTP/1.1
+content-type: application/json
+
+{"email": 'blank@dotes.com', "fullname": 'BlankGodd', "password": 'password', "repeat_password": 'password', "workspace": 'workspace_uno'}
