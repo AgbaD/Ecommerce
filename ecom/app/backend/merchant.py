@@ -144,6 +144,72 @@ def add_merchant_id(store_pid, merchant_id):
     }
 
 
+def deactivate_merchant(merchant_pid):
+    merchant = Merchant.query.filter_by(public_id=merchant_pid).first()
+    if not merchant:
+        return {
+            "status": 'error',
+            'msg': "Merchant not found"
+        }
+    merchant.active = False
+    store_id = merchant.store_id
+    store = Store.query.filter_by(id=store_id).first()
+    if not store:
+        return {
+            "status": 'error',
+            'msg': "Internal error. Store not found!"
+        }
+    store.active = False
+    db.session.add(merchant)
+    db.session.add(store)
+    db.session.commit()
+    return {
+        "status": 'success',
+        'msg': "Merchant deactivated successfully"
+    }
+
+
+def activate_merchant(info):
+    email = info['email']
+    password = info['password']
+
+    merchant = Merchant.query.filter_by(email=email).first()
+    if not merchant:
+        return {
+            "status": 'error',
+            'msg': "Merchant not found"
+        }
+
+    if not check_password_hash(merchant.password_hash, password):
+        return {
+            'status': 'error',
+            'msg': 'Password is incorrect'
+        }
+
+    if merchant.active:
+        return {
+            'status': 'success',
+            'msg': 'Merchant already active'
+        }
+
+    merchant.active = True
+    store_id = merchant.store_id
+    store = Store.query.filter_by(id=store_id).first()
+    if not store:
+        return {
+            "status": 'error',
+            'msg': "Internal error. Store not found!"
+        }
+    store.active = True
+    db.session.add(merchant)
+    db.session.add(store)
+    db.session.commit()
+    return {
+        "status": 'success',
+        'msg': "Merchant activated successfully"
+    }
+
+
 def login_merchant(data):
     email = data['email']
     password = data['password']
@@ -157,6 +223,18 @@ def login_merchant(data):
             'msg': "Merchant not found"
         }
 
+    if not merchant.active:
+        return {
+            "status": "error",
+            'msg': "Merchant account has been deactivated! Please activate your account"
+        }
+
+    if not merchant.admin_active_remark:
+        return {
+            "status": "error",
+            'msg': "Merchant account has been deactivated by admin! Please contact admin"
+        }
+
     if check_password_hash(merchant.password_hash, password):
         return {
             'status': 'success',
@@ -168,38 +246,6 @@ def login_merchant(data):
     return {
         'status': 'error',
         'msg': 'Password is incorrect'
-    }
-
-
-def deactivate_merchant(merchant_pid):
-    merchant = Merchant.query.filter_by(public_id=merchant_pid).first()
-    if not merchant:
-        return {
-            "status": 'error',
-            'msg': "Merchant not found"
-        }
-    merchant.active = False
-    db.session.add(merchant)
-    db.session.commit()
-    return {
-        "status": 'success',
-        'msg': "Merchant deactivated successfully"
-    }
-
-
-def deactivate_store(store_pid):
-    store = Store.query.filter_by(public_id=store_pid).first()
-    if not store:
-        return {
-            "status": 'error',
-            'msg': "Store not found"
-        }
-    store.active = False
-    db.session.add(store)
-    db.session.commit()
-    return {
-        "status": 'success',
-        'msg': "Store deactivated successfully"
     }
 
 
@@ -223,8 +269,17 @@ def create_product(data):
             'msg': e
         }
 
+    merchant = Merchant.query.filter_by(id=merchant_id).first()
+    if not merchant:
+        return {
+            'status': 'error',
+            'msg': "merchant not found"
+        }
+    store_id = merchant.store_id
+
     prod = {
         'merchant_id': merchant_id,
+        'store_id': store_id,
         'name': name,
         'description': description,
         'price': price,
@@ -251,6 +306,7 @@ def create_product(data):
     product = Product(
         public_id=public_id,
         merchant_id=merchant_id,
+        store_id=store_id,
         name=name,
         description=description,
         price=price,
@@ -263,10 +319,7 @@ def create_product(data):
     db.session.commit()
     return {
         "status": 'success',
-        'msg': 'Product successfully created',
-        'data': {
-            'product': product
-        }
+        'msg': 'Product successfully created'
     }
 
 
@@ -321,18 +374,25 @@ def update_product(product_pid, data):
     }
 
 
-def get_all_merchant_products(merchant_id):
-    products = Product.query.filter_by(merchant_id=merchant_id).all()
-    if not products:
+def delete_product(product_pid, merchant_id):
+    product = product.query.filter_by(public_id=product_pid).first()
+    if not product:
         return {
             'status': 'error',
-            'msg': "Products not found"
+            'msg': 'Product not found'
         }
+
+    if product.merchant_id != merchant_id:
+        return {
+            'status': 'error',
+            'msg': 'You are not authorized to perform action!'
+        }
+
+    db.session.delete(product)
+    db.session.commit()
     return {
         'status': 'success',
-        'data': {
-            'products': products
-        }
+        'msg': 'Product deleted successfully!'
     }
 
 
@@ -351,23 +411,6 @@ def get_all_feedback(merchant_id):
     }
 
 
-def get_product_reviews(product_id):
-    product = Product.query.filter_by(product_id=product_id).first()
-    if not product:
-        return {
-            'status': 'error',
-            'msg': "Product not found"
-        }
-    reviews = product.reviews
-    if not reviews:
-        return {
-            'status': 'error',
-            'msg': "Product review not found"
-        }
-    return {
-            'status': 'success',
-            'data': {
-                'reviews': reviews
-            }
-        }
+
+
 

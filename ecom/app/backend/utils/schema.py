@@ -47,6 +47,9 @@ productDb = {
         'merchant_id': {
             'type': 'integer'
         },
+        'store_id': {
+            'type': 'integer'
+        },
         'name': {
             'type': 'string'
         },
