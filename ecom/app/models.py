@@ -16,6 +16,7 @@ class Merchant(db.Model):
     phone = db.Column(db.PickleType)
     password_hash = db.Column(db.String(256))
     active = db.Column(db.Boolean, default=True)
+    admin_active_remark = db.Column(db.Boolean, default=True)
 
 
 class Store(db.Model):
@@ -25,7 +26,7 @@ class Store(db.Model):
     merchant_id = db.Column(db.Integer, defald=None)
     name = db.Column(db.String(128))
     description = db.Column(db.String(256))
-    tags = db.Column(db.PickleType)
+    tags = db.Column(db.String(128))
     date_created = db.Column(db.Datetime)
     active = db.Column(db.Boolean, default=False)
     is_verified = db.Column(db.Boolean, default=False)
@@ -40,12 +41,13 @@ class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     public_id = db.Column(db.String(256))
     merchant_id = db.Column(db.Integer)
+    store_id = db.Column(db.Integer)
     name = db.Column(db.String(128))
     description = db.Column(db.String(512))
     price = db.Column(db.Integer)
     denomination = db.Column(db.String(8))
     category = db.Column(db.String(128))
-    tags = db.Column(db.PickleType)
+    tags = db.Column(db.String(128))
     reviews = db.Column(db.PickleType)
 
 
