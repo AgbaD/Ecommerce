@@ -69,7 +69,7 @@ class User(db.Model):
     phone = db.Column(db.Integer)
     address = db.Column(db.String(256))
     password_hash = db.Column(db.string(256))
-    active = db.Column(db.Boolean, default=False)
+    active = db.Column(db.Boolean, default=True)
     is_verified = db.Column(db.Boolean, default=False)
 
 

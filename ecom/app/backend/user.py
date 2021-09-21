@@ -60,7 +60,7 @@ def create_user(data):
     db.session.commit()
     return {
         'status': 'success',
-        'msg': "user has been created successfully!"
+        'msg': "User has been created successfully!"
     }
 
 
