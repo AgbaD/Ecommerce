@@ -48,15 +48,15 @@ class Product(db.Model):
     denomination = db.Column(db.String(8))
     category = db.Column(db.String(128))
     tags = db.Column(db.String(128))
-    reviews = db.Column(db.PickleType)
+    review = db.Column(db.PickleType)
 
 
 class Feedback(db.Model):
     __tablename__ = 'feedback'
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer)
+    user_pid = db.Column(db.Integer)
     merchant_id = db.Column(db.Integer)
-    content = db.Column(db.String(2048))
+    content = db.Column(db.String(4096))
     datetime = db.Column(db.DateTime, default=datetime.utcnow())
 
 
@@ -69,6 +69,7 @@ class User(db.Model):
     phone = db.Column(db.Integer)
     address = db.Column(db.String(256))
     password_hash = db.Column(db.string(256))
+    cart = db.Column(db.PickleType)
     active = db.Column(db.Boolean, default=True)
     is_verified = db.Column(db.Boolean, default=False)
 

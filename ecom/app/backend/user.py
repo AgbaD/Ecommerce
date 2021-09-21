@@ -1,12 +1,12 @@
 #!/usr/bin/python3
 # Author:   @AgbaD || @agba_dr3
 
-from werkzeug.security import generate_password_hash, check_password_hash
 
 import uuid
 from .. import db
 from .utils.schema import validate_user
-from ..models import User, Product, Feedback
+from ..models import User, Product, Feedback, Merchant
+from werkzeug.security import generate_password_hash, check_password_hash
 
 
 def create_user(data):
@@ -64,6 +64,74 @@ def create_user(data):
     }
 
 
+def deactivate_user(user_id):
+    user = User.query.filter_by(id=user_id).first()
+    if not user:
+        return {
+            'status': 'error',
+            'msg': 'User not found!'
+        }
+    if not user.active:
+        return {
+            'status': 'success',
+            'msg': 'User already deactivated!'
+        }
+    user.active = False
+    db.session.add(user)
+    db.session.commit()
+    return {
+        'status': 'success',
+        'msg': 'User has been deactivated successfully'
+    }
+
+
+def activate_user(info):
+    email = info['email']
+    password = info['password']
+
+    user = User.query.filter_by(email=email).first()
+    if not user:
+        return {
+            'status': 'error',
+            'msg': 'User not found!'
+        }
+
+    if not check_password_hash(user.password_hash, password):
+        return {
+            'status': 'error',
+            'msg': 'Password is incorrect!'
+        }
+
+    if user.active:
+        return {
+        'status': 'success',
+        'msg': 'User already active'
+    }
+
+    user.active = True
+    db.session.add(user)
+    db.session.commit()
+    return {
+        'status': 'success',
+        'msg': 'User has been activated successfully'
+    }
+
+
+def delete_user(user_id):
+    user = User.query.filter_by(id=user_id).first()
+    if not user:
+        return {
+            'status': 'error',
+            'msg': 'User not found!'
+        }
+    db.session.delete(user)
+    db.session.commit()
+    return {
+        'status': 'success',
+        'msg': 'User deleted successfully'
+    }
+
+
 def login_user(data):
     email = data['email']
     password = data['password']
@@ -88,3 +156,82 @@ def login_user(data):
         'status': 'error',
         'msg': 'Password is incorrect'
     }
+
+
+def add_to_cart(user_pid, product_pid):
+    user = User.query.filter_by(public_id=user_pid).first()
+    if not user:
+        return {
+            'status': 'error',
+            'msg': 'User not found'
+        }
+
+    product = Product.query.filter_by(public_id=product_pid).first()
+    if not product:
+        return {
+            'status': 'error',
+            'msg': 'Product not found'
+        }
+
+    user.cart.append(product)
+    db.session.add(user)
+    db.session.commit()
+    return {
+        'status': 'success',
+        'msg': 'Product added to cart'
+    }
+
+def product_review(user_pid, product_pid, review):
+    user = User.query.filter_by(public_id=user_pid).first()
+    if not user:
+        return {
+            'status': 'error',
+            'msg': 'User not found'
+        }
+
+    product = Product.query.filter_by(public_id=product_pid).first()
+    if not product:
+        return {
+            'status': 'error',
+            'msg': 'Product not found'
+        }
+
+    username = user.fullname
+    rev = {username: review}
+    product.review.append(rev)
+    db.session.add(product)
+    db.session.commit()
+    return {
+        'status': 'success',
+        'msg': 'Product review added successfully!'
+    }
+
+
+def store_feedback(user_pid, merchant_pid, feedback):
+    user = User.query.filter_by(public_id=user_pid).first()
+    if not user:
+        return {
+            'status': 'error',
+            'msg': 'User not found'
+        }
+
+    merchant = Merchant.query.filter_by(public_id=merchant_pid).first()
+    if not merchant:
+        return {
+            'status': 'error',
+            'msg': 'Merchant not found'
+        }
+
+    merchant_id = merchant.id
+    feedback = Feedback(
+        user_pid=user_pid,
+        merchant_id=merchant_id,
+        content=feedback
+    )
+    db.session.add(feedback)
+    db.session.commit()
+    return {
+        'status': 'success',
+        'msg': 'Feedback sent successfully!'
+    }
+    

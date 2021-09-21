@@ -6,8 +6,9 @@ import jwt
 from . import api
 from datetime import datetime, timedelta
 from flask import jsonify, request, current_app
-from ..backend.user import login_user, create_user
 from .utils.auth import token_required, admin_required, merchant_required
+from ..backend.user import login_user, create_user, activate_user, deactivate_user, delete_user
+from ..backend.user import add_to_cart, product_review, store_feedback
 
 
 # User
@@ -18,7 +19,7 @@ def user_register():
     try:
         data = request.get_json()
 
-        email = data['email']
+        email = data['email'].lower()
         fullname = data['fullname']
         password = data['password']
         repeat_password = data['repeat_password']
@@ -43,13 +44,70 @@ def user_register():
 
         return jsonify({
             'status': 'success',
-            'msg': "user has been created successfully!"
+            'msg': "User has been created successfully!"
         })
     except Exception as e:
         return jsonify({
             'status': 'error',
             'msg': e
         }), 400
+
+
+@api.route('/user/deactivate')
+@token_required
+def user_deactivate(current_user):
+    user_id = current_user.id
+    resp = deactivate_user(user_id)
+    if resp['status'] != 'success':
+        return jsonify({
+            'status': 'error',
+            'msg': resp['msg']
+        }), 400
+    return jsonify({
+        'status': 'success',
+        'msg': resp['msg']
+    }), 200
+
+
+@api.route('/user/activate', methods=['POST'])
+def user_activate():
+    data = request.get_json()
+
+    email = data['email'].lower()
+    password = data['password']
+
+    info = {
+        'email': email,
+        'password': password
+    }
+
+    resp = activate_user(info)
+    if resp['status'] != 'success':
+        return jsonify({
+            'status': 'error',
+            'msg': resp['msg']
+        }), 400
+    return jsonify({
+        'status': 'success',
+        'msg': resp['msg']
+    }), 200
+
+
+@api.route('/user/delete')
+@token_required
+def user_delete(current_user):
+    user_id = current_user.id
+    resp = delete_user(user_id)
+
+    if resp['status'] != 'success':
+        return jsonify({
+            'status': 'error',
+            'msg': resp['msg']
+        }), 400
+    return jsonify({
+        'status': 'success',
+        'msg': resp['msg']
+    }), 201
 
 
 @api.route('/user/login', methods=['POST'])
@@ -75,7 +133,7 @@ def user_login():
         pid = resp['data']['public_id']
         token = jwt.encode({
             'public_id': pid,
-            'exp': datetime.utcnow() + timedelta(minutes=90)
+            'exp': datetime.utcnow() + timedelta(minutes=30)
         }, current_app.config['SECRET_KEY'], "HS256")
 
         return jsonify({
@@ -91,4 +149,57 @@ def user_login():
             'status': 'error',
             'msg': e
         }), 400
-        
+
+
+@api.route('/user/add_to_cart/<product_pid>')
+@token_required
+def add_product_to_cart(current_user, product_pid):
+    user_pid = current_user.public_id
+    resp = add_to_cart(user_pid, product_pid)
+    if resp['status'] != 'success':
+        return jsonify({
+            'status': 'error',
+            'msg': resp['msg']
+        }), 400
+    return jsonify({
+        'status': 'success',
+        'msg': resp[msg]
+    }), 200
+
+
+@api.route('/user/product_review/<product_pid>', methods=['POST'])
+@token_required
+def review_product(current_user, product_pid):
+    data = request.get_json()
+    review = data['review']
+
+    user_pid = current_user.public_id
+    resp = product_review(user_pid, product_pid, review)
+    if resp['status'] != 'success':
+        return jsonify({
+            'status': 'error',
+            'msg': resp['msg']
+        }), 400
+    return jsonify({
+        'status': 'success',
+        'msg': resp[msg]
+    }), 200
+
+
+@api.route('/user/feedback/<merchant_pid>', methods='POST')
+@token_required
+def feedback_store(current_user, merchant_pid):
+    data = request.get_json()
+    feedback = data['feedback']
+
+    user_pid = current_user.public_id
+    resp = store_feedback(user_pid, merchant_pid, feedback)
+    if resp['status'] != 'success':
+        return jsonify({
+            'status': 'error',
+            'msg': resp['msg']
+        }), 400
+    return jsonify({
+        'status': 'success',
+        'msg': resp[msg]
+    }), 200

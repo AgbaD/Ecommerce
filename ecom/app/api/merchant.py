@@ -20,7 +20,7 @@ def merchant_register():
 
     f_name = data['firstname']
     l_name = data['lastname']
-    email = data['email']
+    email = data['email'].lower()
     phone = data['phone']
     password = data['password']
     repeat_password = data['repeat_password']
@@ -98,7 +98,7 @@ def merchant_deactivate(merchant):
 def merchant_activate():
     try:
         data = request.get_json()
-        email = data['email']
+        email = data['email'].lower()
         password = data['password']
 
         info = {
@@ -144,7 +144,7 @@ def merchant_login():
     try:
         data = request.get_json()
 
-        email = data['email']
+        email = data['email'].lower()
         password = data['password']
 
         info = {
@@ -163,7 +163,7 @@ def merchant_login():
         pid = resp['data']['public_id']
         token = jwt.encode({
             'public_id': pid,
-            'exp': datetime.utcnow() + timedelta(minutes=90)
+            'exp': datetime.utcnow() + timedelta(minutes=30)
         }, current_app.config['SECRET_KEY'], "HS256")
 
         return jsonify({
