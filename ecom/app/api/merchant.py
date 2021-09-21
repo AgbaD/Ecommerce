@@ -7,7 +7,7 @@ from . import api
 from datetime import datetime, timedelta
 from flask import jsonify, request, current_app
 from .utils.auth import token_required, admin_required, merchant_required
-from ..backend.merchant import activate_merchant, create_product, update_product, delete_product
+from ..backend.merchant import activate_merchant, create_product, update_product, delete_product, delete_merchant
 from ..backend.merchant import create_merchant, create_store, add_merchant_id, login_merchant, deactivate_merchant
 
 
@@ -121,6 +121,22 @@ def merchant_activate():
             'status': 'error',
             'msg': e
         }), 400
+
+
+@api.route('/merchant/delete')
+@merchant_register
+def merchant_delete(merchant):
+    merchant_id = merchant.id
+    resp = delete_merchant(merchant_id)
+    if resp['status'] != 'success':
+        return jsonify({
+            'status': "error",
+            'msg': resp['msg']
+        }), 400
+    return jsonify({
+        "status": 'success',
+        'msg': "Merchant deleted successfully"
+    }), 200
 
 
 @api.route("/merchant/login", methods=['POST'])

@@ -210,6 +210,21 @@ def activate_merchant(info):
     }
 
 
+def delete_merchant(merchant_id):
+    merchant = Merchant.query.filter_by(id=merchant_id).first()
+    if not merchant:
+        return {
+            'status': 'error',
+            'msg': "Merchant not found"
+        }
+    db.session.delete(merchant)
+    db.session.commit()
+    return {
+        "status": 'success',
+        'msg': "Merchant deleted successfully"
+    }
+
+
 def login_merchant(data):
     email = data['email']
     password = data['password']
