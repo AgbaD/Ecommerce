@@ -27,13 +27,9 @@ class Store(db.Model):
     name = db.Column(db.String(128))
     description = db.Column(db.String(256))
     tags = db.Column(db.String(128))
-    date_created = db.Column(db.Datetime)
+    date_created = db.Column(db.Datetime, default=datetime.utcnow())
     active = db.Column(db.Boolean, default=False)
     is_verified = db.Column(db.Boolean, default=False)
-
-    def __init__(self, **kwargs):
-        super(Store, self).__init__(**kwargs)
-        Store.date_created = datetime.utcnow()
 
 
 class Product(db.Model):
@@ -51,10 +47,16 @@ class Product(db.Model):
     review = db.Column(db.PickleType)
 
 
+class Category(db.Model):
+    __tablename__ = "category"
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(64))
+
+
 class Feedback(db.Model):
     __tablename__ = 'feedback'
     id = db.Column(db.Integer, primary_key=True)
-    user_pid = db.Column(db.Integer)
+    user = db.Column(db.String(128))
     merchant_id = db.Column(db.Integer)
     content = db.Column(db.String(4096))
     datetime = db.Column(db.DateTime, default=datetime.utcnow())

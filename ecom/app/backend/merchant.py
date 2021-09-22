@@ -2,7 +2,7 @@
 # Author:   @AgbaD || @agba_dr3
 
 from werkzeug.security import generate_password_hash, check_password_hash
-from ..models import Merchant, Store, Product, Feedback
+from ..models import Merchant, Store, Product, Feedback, Category
 from .. import db
 
 import uuid
@@ -276,7 +276,7 @@ def create_product(data):
         description = data['description']
         price = data['price']
         denomination = data['denomination']
-        category = data['category']
+        category = data['category'].lower()
         tags = data['tags']
     except Exception as e:
         return {
@@ -330,7 +330,15 @@ def create_product(data):
         tags=tags
     )
 
+    cate = Category.query.filter_by(name=category).first()
+    if not cate:
+        cat = Category(
+            name=category
+        )
+
     db.session.add(product)
+    if cat:
+        db.session.add(cat)
     db.session.commit()
     return {
         "status": 'success',
@@ -370,7 +378,12 @@ def update_product(product_pid, data):
         pass
 
     try:
-        category = data['category']
+        category = data['category'].lower()
+        cate = Category.query.filter_by(name=category).first()
+        if not cate:
+            cat = Category(
+                name=category
+            )
         product.category = category
     except Exception:
         pass
@@ -382,6 +395,8 @@ def update_product(product_pid, data):
         pass
 
     db.session.add(product)
+    if cat:
+        db.session.add(cat)
     db.session.commit()
     return {
         'status': 'success',
@@ -418,14 +433,20 @@ def get_all_feedback(merchant_id):
             'status': 'error',
             'msg': "Feedbacks not found"
         }
+
+    feedbacks = {}
+    i = 0
+    for feed in feedback:
+        feedbacks[i] = {
+            'user': feed.user,
+            'content': feed.content,
+            'date': feed.datetime
+        }
+        i += 1
     return {
         'status': 'success',
         'data': {
-            'feedback': feedback
+            'feedback': feedbacks
         }
     }
-
-
-
-
 

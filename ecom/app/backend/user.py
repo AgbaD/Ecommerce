@@ -181,6 +181,36 @@ def add_to_cart(user_pid, product_pid):
         'msg': 'Product added to cart'
     }
 
+
+def remove_from_cart(user_pid, product_pid):
+    user = User.query.filter_by(public_id=user_pid).first()
+    if not user:
+        return {
+            'status': 'error',
+            'msg': 'User not found'
+        }
+
+    product = Product.query.filter_by(public_id=product_pid).first()
+    if not product:
+        return {
+            'status': 'error',
+            'msg': 'Product not found'
+        }
+
+    if product in user.cart:
+        user.cart.remove(product)
+        db.session.add(user)
+        db.session.commit()
+        return {
+            'status': 'success',
+            'msg': 'Product removed from cart'
+        }
+    return {
+        'status': 'error',
+        'msg': 'Product not present in cart'
+    }
+
+
 def product_review(user_pid, product_pid, review):
     user = User.query.filter_by(public_id=user_pid).first()
     if not user:
@@ -224,7 +254,7 @@ def store_feedback(user_pid, merchant_pid, feedback):
 
     merchant_id = merchant.id
     feedback = Feedback(
-        user_pid=user_pid,
+        user=user.fullname,
         merchant_id=merchant_id,
         content=feedback
     )
