@@ -142,7 +142,7 @@ def get_all_products_from_store(store_pid):
     if not products:
         return {
             'status': 'error',
-            'msg': "Products not found"
+            'msg': "Store does not contain any product"
         }
 
     all_products = {}
