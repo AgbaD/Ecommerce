@@ -91,7 +91,7 @@ def fetch_category_products(category_name):
         }), 500
 
 
-@api.route('/get_all_stores', methods=[GET])
+@api.route('/get_all_stores', methods=['GET'])
 def fetch_all_stores():
     try:
         resp = get_all_stores()

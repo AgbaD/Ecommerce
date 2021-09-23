@@ -7,7 +7,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from flask_msearch import Search
 
-from ..config import config
+from config import config
 
 db = SQLAlchemy()
 search = Search(db=db)

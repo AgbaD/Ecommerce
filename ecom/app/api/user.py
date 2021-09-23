@@ -261,7 +261,7 @@ def review_product(current_user, product_pid):
         }), 500
 
 
-@api.route('/user/feedback/<merchant_pid>', methods='POST')
+@api.route('/user/feedback/<merchant_pid>', methods=['POST'])
 @token_required
 def feedback_store(current_user, merchant_pid):
     try:
