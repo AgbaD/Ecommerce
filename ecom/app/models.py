@@ -21,6 +21,7 @@ class Merchant(db.Model):
 
 class Store(db.Model):
     __tablename__ = "stores"
+    __searchable__ = ['name', 'tags']
     id = db.Column(db.Integer, primary_key=True)
     public_id = db.Column(db.String(256))
     merchant_id = db.Column(db.Integer, default=None)
@@ -34,6 +35,7 @@ class Store(db.Model):
 
 class Product(db.Model):
     __tablename__ = "products"
+    __searchable__ = ['name', 'tags', 'category']
     id = db.Column(db.Integer, primary_key=True)
     public_id = db.Column(db.String(256))
     merchant_id = db.Column(db.Integer)
@@ -49,6 +51,7 @@ class Product(db.Model):
 
 class Category(db.Model):
     __tablename__ = "category"
+    __searchable__ = ['name']
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64))
 

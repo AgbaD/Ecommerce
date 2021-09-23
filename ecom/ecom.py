@@ -3,8 +3,8 @@
 
 import os
 from dotenv import load_dotenv
-from app import db, create_app
 from flask_migrate import Migrate
+from app import db, create_app, search
 from app.models import Merchant, Store, Product, Category, Feedback, User
 
 load_dotenv()
@@ -15,7 +15,7 @@ migrate = Migrate(app, db)
 
 @app.shell_context_processor
 def make_shell_context():
-    return dict(db=db, app=app)
+    return dict(db=db, app=app, search=search)
 
 
 if __name__ == "__main__":

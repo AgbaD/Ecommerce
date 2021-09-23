@@ -25,7 +25,7 @@ class Config:
     password = os.getenv('DB_PASSWORD')
     dbname = os.getenv("DB_NAME")
     SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URI") or \
-                              f"mysql+mysqlconnector://{username}:{password}@localhost/{dbname}"
+                              f"postgresql://{username}:{password}@localhost:5432/{dbname}"
 
     @staticmethod
     def init_app(app):
