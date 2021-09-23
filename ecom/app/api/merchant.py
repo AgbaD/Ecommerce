@@ -30,8 +30,8 @@ def merchant_register():
         store_tags = data['store_tags']
 
         info_merchant = {
-            'f_name': f_name,
-            'l_name': l_name,
+            'firstname': f_name,
+            'lastname': l_name,
             'email': email,
             'phone': phone,
             'password': password,
@@ -58,6 +58,7 @@ def merchant_register():
 
         resp = create_merchant(info_merchant)
         if resp['status'] != 'success':
+            print(resp['msg'])
             return jsonify({
                 'status': 'error',
                 'msg': resp['msg']

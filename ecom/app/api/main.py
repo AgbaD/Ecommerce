@@ -8,6 +8,7 @@ from flask import jsonify
 @api.route("/index", methods=['GET'])
 def index():
     return jsonify({
+        'status': 'success',
         'msg': 'You are connected!'
     }), 200
 

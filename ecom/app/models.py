@@ -29,7 +29,7 @@ class Store(db.Model):
     description = db.Column(db.String(256))
     tags = db.Column(db.String(128))
     date_created = db.Column(db.DateTime, default=datetime.utcnow())
-    active = db.Column(db.Boolean, default=False)
+    active = db.Column(db.Boolean, default=True)
     is_verified = db.Column(db.Boolean, default=False)
 
 

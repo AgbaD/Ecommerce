@@ -217,7 +217,16 @@ def delete_merchant(merchant_id):
             'status': 'error',
             'msg': "Merchant not found"
         }
+    store_id = merchant.store_id
+    store = Store.query.filter_by(id=store_id).first()
+    if not store:
+        return {
+            'status': 'error',
+            'msg': "Store not found"
+        }
+        
     db.session.delete(merchant)
+    db.session.delete(store)
     db.session.commit()
     return {
         "status": 'success',

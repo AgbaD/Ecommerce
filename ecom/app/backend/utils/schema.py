@@ -18,7 +18,7 @@ merchantDb = {
             'format': 'email'
         },
         'phone': {
-            'type': 'integer'
+            'type': 'string'
         },
         'password': {
             'type': 'string'
@@ -57,7 +57,7 @@ productDb = {
             'type': 'string'
         },
         'price': {
-            'type': 'integer'
+            'type': 'string'
         },
         'denomination': {
             'type': 'string'
@@ -66,7 +66,7 @@ productDb = {
             'type': 'string'
         },
         'tags': {
-            'type': 'object'
+            'type': 'string'
         }
     }
 }
@@ -82,7 +82,7 @@ userDb = {
             'type': 'string'
         },
         'phone': {
-            'type': 'integer'
+            'type': 'string'
         },
         'address': {
             'type': 'string'
