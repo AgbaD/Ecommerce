@@ -211,6 +211,44 @@ def remove_from_cart(user_pid, product_pid):
     }
 
 
+def get_cart(user_pid):
+    user = User.query.filter_by(public_id=user_pid).first()
+    if not user:
+        return {
+            'status': 'error',
+            'msg': 'User not found'
+        }
+
+    f_cart user.cart
+    if not f_cart:
+        return {
+            'status': 'error',
+            'msg': 'User cart is empty'
+        }
+
+    cart = {}
+    i = 0
+    for prod in f_cart:
+        cart[i] = {
+            'id': prod.id,
+            'public_id': prod.public_id,
+            'store_id': prod.store_id,
+            'name': prod.name,
+            'description': prod.description,
+            'price': prod.price,
+            'denomination': prod.denomination,
+            'category': prod.category,
+            'reviews': prod.review
+        }
+        i += 1
+    return {
+        'status': 'success',
+        'data': {
+            'cart': cart
+        }
+    }
+
+
 def product_review(user_pid, product_pid, review):
     user = User.query.filter_by(public_id=user_pid).first()
     if not user:

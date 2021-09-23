@@ -8,7 +8,7 @@ from datetime import datetime, timedelta
 from flask import jsonify, request, current_app
 from .utils.auth import token_required, admin_required, merchant_required
 from ..backend.user import add_to_cart, product_review, store_feedback, remove_from_cart
-from ..backend.user import login_user, create_user, activate_user, deactivate_user, delete_user
+from ..backend.user import login_user, create_user, activate_user, deactivate_user, delete_user, get_cart
 
 
 # User
@@ -45,69 +45,87 @@ def user_register():
         return jsonify({
             'status': 'success',
             'msg': "User has been created successfully!"
-        })
+        }), 201
     except Exception as e:
         return jsonify({
             'status': 'error',
             'msg': e
-        }), 400
+        }), 500
 
 
-@api.route('/user/deactivate')
+@api.route('/user/deactivate', methods=['PUT'])
 @token_required
 def user_deactivate(current_user):
-    user_id = current_user.id
-    resp = deactivate_user(user_id)
-    if resp['status'] != 'success':
+    try:
+        user_id = current_user.id
+        resp = deactivate_user(user_id)
+        if resp['status'] != 'success':
+            return jsonify({
+                'status': 'error',
+                'msg': resp['msg']
+            }), 400
+        return jsonify({
+            'status': 'success',
+            'msg': resp['msg']
+        }), 200
+    except Exception as e:
         return jsonify({
             'status': 'error',
-            'msg': resp['msg']
-        }), 400
-    return jsonify({
-        'status': 'success',
-        'msg': resp['msg']
-    }), 200
+            'msg': e
+        }), 500
 
 
 @api.route('/user/activate', methods=['POST'])
 def user_activate():
-    data = request.get_json()
+    try:
+        data = request.get_json()
 
-    email = data['email'].lower()
-    password = data['password']
+        email = data['email'].lower()
+        password = data['password']
 
-    info = {
-        'email': email,
-        'password': password
-    }
+        info = {
+            'email': email,
+            'password': password
+        }
 
-    resp = activate_user(info)
-    if resp['status'] != 'success':
+        resp = activate_user(info)
+        if resp['status'] != 'success':
+            return jsonify({
+                'status': 'error',
+                'msg': resp['msg']
+            }), 400
+        return jsonify({
+            'status': 'success',
+            'msg': resp['msg']
+        }), 200
+    except Exception as e:
         return jsonify({
             'status': 'error',
-            'msg': resp['msg']
-        }), 400
-    return jsonify({
-        'status': 'success',
-        'msg': resp['msg']
-    }), 200
+            'msg': e
+        }), 500
 
 
-@api.route('/user/delete')
+@api.route('/user/delete', methods=['DELETE'])
 @token_required
 def user_delete(current_user):
-    user_id = current_user.id
-    resp = delete_user(user_id)
+    try:
+        user_id = current_user.id
+        resp = delete_user(user_id)
 
-    if resp['status'] != 'success':
+        if resp['status'] != 'success':
+            return jsonify({
+                'status': 'error',
+                'msg': resp['msg']
+            }), 400
+        return jsonify({
+            'status': 'success',
+            'msg': resp['msg']
+        }), 200
+    except Exception as e:
         return jsonify({
             'status': 'error',
-            'msg': resp['msg']
-        }), 400
-    return jsonify({
-        'status': 'success',
-        'msg': resp['msg']
-    }), 201
+            'msg': e
+        }), 500
 
 
 @api.route('/user/login', methods=['POST'])
@@ -148,74 +166,121 @@ def user_login():
         return jsonify({
             'status': 'error',
             'msg': e
-        }), 400
+        }), 500
 
 
-@api.route('/user/add_to_cart/<product_pid>')
+@api.route('/user/add_to_cart/<product_pid>', methods=['PUT'])
 @token_required
 def add_product_to_cart(current_user, product_pid):
-    user_pid = current_user.public_id
-    resp = add_to_cart(user_pid, product_pid)
-    if resp['status'] != 'success':
+    try:
+        user_pid = current_user.public_id
+        resp = add_to_cart(user_pid, product_pid)
+        if resp['status'] != 'success':
+            return jsonify({
+                'status': 'error',
+                'msg': resp['msg']
+            }), 400
+        return jsonify({
+            'status': 'success',
+            'msg': resp[msg]
+        }), 200
+    except Exception as e:
         return jsonify({
             'status': 'error',
-            'msg': resp['msg']
-        }), 400
-    return jsonify({
-        'status': 'success',
-        'msg': resp[msg]
-    }), 200
+            'msg': e
+        }), 500
 
 
-@api.route('/user/remove_from_cart/<product_pid>')
+@api.route('/user/remove_from_cart/<product_pid>', methods=['PUT'])
 @token_required
 def remove_product_from_cart(current_user, product_pid):
-    user_pid = current_user.public_id
-    resp = remove_from_cart(user_pid, product_pid)
-    if resp['status'] != 'success':
+    try:
+        user_pid = current_user.public_id
+        resp = remove_from_cart(user_pid, product_pid)
+        if resp['status'] != 'success':
+            return jsonify({
+                'status': 'error',
+                'msg': resp['msg']
+            }), 400
+        return jsonify({
+            'status': 'success',
+            'msg': resp[msg]
+        }), 200
+    except Exception as e:
         return jsonify({
             'status': 'error',
+            'msg': e
+        }), 500
+
+
+
+@api.route('/get_cart', methods=['GET'])
+@token_required
+def fethch_cart(current_user):
+    try:
+        user_pid = current_user.public_id
+        resp = get_cart(user_pid)
+        if resp['status'] != 'success':
+            return jsonify({
+                'status': resp['status'],
+                'msg': resp['msg']
+            }), 400
+        return jsonify({
+            'status': resp['status'],
             'msg': resp['msg']
-        }), 400
-    return jsonify({
-        'status': 'success',
-        'msg': resp[msg]
-    }), 200
+        }), 200
+    except Exception as e:
+        return jsonify({
+            'status': 'error',
+            'msg': e
+        }), 500
 
 
 @api.route('/user/product_review/<product_pid>', methods=['POST'])
 @token_required
 def review_product(current_user, product_pid):
-    data = request.get_json()
-    review = data['review']
+    try:
+        data = request.get_json()
+        review = data['review']
 
-    user_pid = current_user.public_id
-    resp = product_review(user_pid, product_pid, review)
-    if resp['status'] != 'success':
+        user_pid = current_user.public_id
+        resp = product_review(user_pid, product_pid, review)
+        if resp['status'] != 'success':
+            return jsonify({
+                'status': 'error',
+                'msg': resp['msg']
+            }), 400
+        return jsonify({
+            'status': 'success',
+            'msg': resp[msg]
+        }), 201
+    except Exception as e:
         return jsonify({
             'status': 'error',
-            'msg': resp['msg']
-        }), 400
-    return jsonify({
-        'status': 'success',
-        'msg': resp[msg]
-    }), 200
+            'msg': e
+        }), 500
 
 
 @api.route('/user/feedback/<merchant_pid>', methods='POST')
 @token_required
 def feedback_store(current_user, merchant_pid):
-    data = request.get_json()
-    feedback = data['feedback']
+    try:
+        data = request.get_json()
+        feedback = data['feedback']
 
-    user_pid = current_user.public_id
-    resp = store_feedback(user_pid, merchant_pid, feedback)
-    if resp['status'] != 'success':
+        user_pid = current_user.public_id
+        resp = store_feedback(user_pid, merchant_pid, feedback)
+        if resp['status'] != 'success':
+            return jsonify({
+                'status': 'error',
+                'msg': resp['msg']
+            }), 400
+        return jsonify({
+            'status': 'success',
+            'msg': resp[msg]
+        }), 201
+    except Exception as e:
         return jsonify({
             'status': 'error',
-            'msg': resp['msg']
-        }), 400
-    return jsonify({
-        'status': 'success',
-        'msg': resp[msg]
-    }), 200
+            'msg': e
+        }), 500

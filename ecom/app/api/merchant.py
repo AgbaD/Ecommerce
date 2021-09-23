@@ -16,82 +16,94 @@ from ..backend.merchant import create_merchant, create_store, add_merchant_id, l
 
 @api.route("/merchant/register", methods=['POST'])
 def merchant_register():
-    data = request.get_json()
+    try:
+        data = request.get_json()
 
-    f_name = data['firstname']
-    l_name = data['lastname']
-    email = data['email'].lower()
-    phone = data['phone']
-    password = data['password']
-    repeat_password = data['repeat_password']
-    store_name = data['store_name']
-    store_description = data['store_description']
-    store_tags = data['store_tags']
+        f_name = data['firstname']
+        l_name = data['lastname']
+        email = data['email'].lower()
+        phone = data['phone']
+        password = data['password']
+        repeat_password = data['repeat_password']
+        store_name = data['store_name']
+        store_description = data['store_description']
+        store_tags = data['store_tags']
 
-    info_merchant = {
-        'f_name': f_name,
-        'l_name': l_name,
-        'email': email,
-        'phone': phone,
-        'password': password,
-        'repeat_password': repeat_password
-    }
+        info_merchant = {
+            'f_name': f_name,
+            'l_name': l_name,
+            'email': email,
+            'phone': phone,
+            'password': password,
+            'repeat_password': repeat_password
+        }
 
-    info_store = {
-        'name': store_name,
-        'description': store_description,
-        'tags': store_tags
-    }
+        info_store = {
+            'name': store_name,
+            'description': store_description,
+            'tags': store_tags
+        }
 
-    store = create_store(info_store)
-    if store['status'] != 'success':
+        store = create_store(info_store)
+        if store['status'] != 'success':
+            return jsonify({
+                'status': 'error',
+                'msg': store['msg']
+            }), 400
+
+        store = store['data']['store']
+        store_id = store.id
+        info_merchant['store_id'] = store_id
+        store_pid = store.public_id
+
+        resp = create_merchant(info_merchant)
+        if resp['status'] != 'success':
+            return jsonify({
+                'status': 'error',
+                'msg': resp['msg']
+            }), 400
+
+        merchant = resp['data']['merchant']
+        merchant_id = merchant.id
+
+        resp = add_merchant_id(store_pid, merchant_id)
+        if resp['status'] != 'success':
+            return jsonify({
+                'status': 'error',
+                'msg': resp['msg']
+            }), 400
+
+        return jsonify({
+            'status': 'success',
+            'msg': 'Store and merchant accounts created successfully!'
+        }), 201
+    except Exception as e:
         return jsonify({
             'status': 'error',
-            'msg': store['msg']
-        }), 400
-
-    store = store['data']['store']
-    store_id = store.id
-    info_merchant['store_id'] = store_id
-    store_pid = store.public_id
-
-    resp = create_merchant(info_merchant)
-    if resp['status'] != 'success':
-        return jsonify({
-            'status': 'error',
-            'msg': resp['msg']
-        }), 400
-
-    merchant = resp['data']['merchant']
-    merchant_id = merchant.id
-
-    resp = add_merchant_id(store_pid, merchant_id)
-    if resp['status'] != 'success':
-        return jsonify({
-            'status': 'error',
-            'msg': resp['msg']
-        }), 400
-
-    return jsonify({
-        'status': 'success',
-        'msg': 'Store and merchant accounts created successfully!'
-    }), 201
+            'msg': e
+        }), 500
 
 
-@api.route("/merchant/deactivate")
+@api.route("/merchant/deactivate", methods=['PUT'])
 @merchant_required
 def merchant_deactivate(merchant):
-    merchant_pid = merchant.public_id
-    resp = deactivate_merchant(merchant_pid)
-    if resp['status'] != "success":
+    try:
+        merchant_pid = merchant.public_id
+        resp = deactivate_merchant(merchant_pid)
+        if resp['status'] != "success":
+            return jsonify({
+                'status': 'error',
+                'msg': resp['msg']
+            }), 400
+        return jsonify({
+            'status': 'success',
+            'msg': resp['msg']
+        }), 200
+    except Exception as e:
         return jsonify({
             'status': 'error',
-            'msg': resp['msg']
-        }), 400
-    return jsonify({
-        'status': 'success',
-        'msg': resp['msg']
-    }), 200
+            'msg': e
+        }), 500
 
 
 @api.route("/merchant/activate", methods=['POST'])
@@ -120,23 +132,29 @@ def merchant_activate():
         return jsonify({
             'status': 'error',
             'msg': e
-        }), 400
+        }), 500
 
 
-@api.route('/merchant/delete')
+@api.route('/merchant/delete', methods=['DELETE'])
 @merchant_register
 def merchant_delete(merchant):
-    merchant_id = merchant.id
-    resp = delete_merchant(merchant_id)
-    if resp['status'] != 'success':
+    try:
+        merchant_id = merchant.id
+        resp = delete_merchant(merchant_id)
+        if resp['status'] != 'success':
+            return jsonify({
+                'status': "error",
+                'msg': resp['msg']
+            }), 400
         return jsonify({
-            'status': "error",
-            'msg': resp['msg']
-        }), 400
-    return jsonify({
-        "status": 'success',
-        'msg': "Merchant deleted successfully"
-    }), 200
+            "status": 'success',
+            'msg': "Merchant deleted successfully"
+        }), 200
+    except Exception as e:
+        return jsonify({
+            'status': 'error',
+            'msg': e
+        }), 500
 
 
 @api.route("/merchant/login", methods=['POST'])
@@ -177,7 +195,7 @@ def merchant_login():
         return jsonify({
             'status': 'error',
             'msg': e
-        }), 400
+        }), 500
 
 
 @api.route("/merchant/create_product", methods=['POST'])
@@ -220,64 +238,82 @@ def add_product(merchant):
         return jsonify({
             'status': 'error',
             'msg': e
-        }), 400
+        }), 500
 
 
 @api.route('/merchant/update_product/<product_pid>', methods=['POST'])
 @merchant_required
 def edit_product(merchant, product_pid):
-    data = request.get_json()
-    info = {}
+    try:
+        data = request.get_json()
+        info = {}
 
-    info['name'] = data['name'] if data['name']
-    info['description'] = data['description'] if data['description']
-    info['price'] = data['price'] if data['price']
-    info['denomination'] = data['denomination'] if data['denomination']
-    info['category'] = data['category'] if data['category']
-    info['tags'] = data['tags'] if data['tags']
+        info['name'] = data['name'] if data['name']
+        info['description'] = data['description'] if data['description']
+        info['price'] = data['price'] if data['price']
+        info['denomination'] = data['denomination'] if data['denomination']
+        info['category'] = data['category'] if data['category']
+        info['tags'] = data['tags'] if data['tags']
 
-    resp = update_product(product_pid, info)
-    if resp['status'] != 'success':
+        resp = update_product(product_pid, info)
+        if resp['status'] != 'success':
+            return jsonify({
+                'status': 'error',
+                'msg': resp['msg']
+            }), 400
+        return jsonify({
+            'status': 'success',
+            'msg': resp['msg']
+        }), 200
+    except Exception as e:
         return jsonify({
             'status': 'error',
-            'msg': resp['msg']
-        }), 400
-    return jsonify({
-        'status': 'success',
-        'msg': resp['msg']
-    }), 200
+            'msg': e
+        }), 500
 
 
-@api.route('/merchant/delete_product/<product_pid>', methods=['POST'])
+@api.route('/merchant/delete_product/<product_pid>', methods=['DELETE'])
 @merchant_required
 def product_delete(merchant, product_pid):
-    merchant_id = merchant.id
-    resp =  delete_product(product_pid, merchant_id)
-    if resp['status'] != 'success':
+    try:
+        merchant_id = merchant.id
+        resp =  delete_product(product_pid, merchant_id)
+        if resp['status'] != 'success':
+            return jsonify({
+                'status': 'error',
+                'msg': resp['msg']
+            }), 400
+
+        return jsonify({
+            'status': 'success',
+            'msg': resp['msg']
+        }), 200
+    except Exception as e:
         return jsonify({
             'status': 'error',
-            'msg': resp['msg']
-        }), 400
-
-    return jsonify({
-        'status': 'success',
-        'msg': resp['msg']
-    })
+            'msg': e
+        }), 500
 
 
 @api.route('/merchant/feedback', methods=['GET'])
 @merchant_required
 def merchant_feedback(merchant):
-    merchant_id = merchant.id
-    resp = get_all_feedback(merchant_id)
-    if resp['status'] != 'success':
+    try:
+        merchant_id = merchant.id
+        resp = get_all_feedback(merchant_id)
+        if resp['status'] != 'success':
+            return jsonify({
+                'status': 'error',
+                'msg': resp['msg']
+            }), 400
+        return jsonify({
+            'status': 'success',
+            'data': resp['data']['feedback']
+        }), 200
+    except Exception as e:
         return jsonify({
             'status': 'error',
-            'msg': resp['msg']
-        }), 400
-    return jsonify({
-        'status': 'success',
-        'data': resp['data']['feedback']
-    }), 200
+            'msg': e
+        }), 500
 
     
