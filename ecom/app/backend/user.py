@@ -219,7 +219,7 @@ def get_cart(user_pid):
             'msg': 'User not found'
         }
 
-    f_cart user.cart
+    f_cart = user.cart
     if not f_cart:
         return {
             'status': 'error',

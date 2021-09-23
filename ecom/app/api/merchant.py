@@ -136,7 +136,7 @@ def merchant_activate():
 
 
 @api.route('/merchant/delete', methods=['DELETE'])
-@merchant_register
+@merchant_required
 def merchant_delete(merchant):
     try:
         merchant_id = merchant.id
@@ -247,13 +247,19 @@ def edit_product(merchant, product_pid):
     try:
         data = request.get_json()
         info = {}
-
-        info['name'] = data['name'] if data['name']
-        info['description'] = data['description'] if data['description']
-        info['price'] = data['price'] if data['price']
-        info['denomination'] = data['denomination'] if data['denomination']
-        info['category'] = data['category'] if data['category']
-        info['tags'] = data['tags'] if data['tags']
+        
+        if data['name']:
+            info['name'] = data['name']
+        if data['description']:
+            info['description'] = data['description']
+        if data['price']:
+            info['price'] = data['price']
+        if data['denomination']:
+            info['denomination'] = data['denomination']
+        if data['category']:
+            info['category'] = data['category']
+        if data['tags']:
+            info['tags'] = data['tags']
 
         resp = update_product(product_pid, info)
         if resp['status'] != 'success':

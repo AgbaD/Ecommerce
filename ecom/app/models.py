@@ -23,11 +23,11 @@ class Store(db.Model):
     __tablename__ = "stores"
     id = db.Column(db.Integer, primary_key=True)
     public_id = db.Column(db.String(256))
-    merchant_id = db.Column(db.Integer, defald=None)
+    merchant_id = db.Column(db.Integer, default=None)
     name = db.Column(db.String(128))
     description = db.Column(db.String(256))
     tags = db.Column(db.String(128))
-    date_created = db.Column(db.Datetime, default=datetime.utcnow())
+    date_created = db.Column(db.DateTime, default=datetime.utcnow())
     active = db.Column(db.Boolean, default=False)
     is_verified = db.Column(db.Boolean, default=False)
 
@@ -70,7 +70,7 @@ class User(db.Model):
     fullname = db.Column(db.String(128))
     phone = db.Column(db.Integer)
     address = db.Column(db.String(256))
-    password_hash = db.Column(db.string(256))
+    password_hash = db.Column(db.String(256))
     cart = db.Column(db.PickleType)
     active = db.Column(db.Boolean, default=True)
     is_verified = db.Column(db.Boolean, default=False)
