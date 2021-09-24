@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ae4d48a7-a4a5-4b1e-9562-57719894963e" name="Default Changelist" comment="debugging">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ecom/app/api/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/ecom/app/api/user.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ecom/app/backend/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/ecom/app/backend/user.py" afterDir="false" />
-    </list>
+    <list default="true" id="ae4d48a7-a4a5-4b1e-9562-57719894963e" name="Default Changelist" comment="debugging" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -272,7 +268,14 @@
       <option name="project" value="LOCAL" />
       <updated>1632496936491</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="debugging and refactoring">
+      <created>1632501993366</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1632501993366</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -311,6 +314,7 @@
     <MESSAGE value="start the refactoring. Add comments for better understanding, refactor to indexes instead of names. cryptography || keep it up" />
     <MESSAGE value="refactoring" />
     <MESSAGE value="debugging" />
-    <option name="LAST_COMMIT_MESSAGE" value="debugging" />
+    <MESSAGE value="debugging and refactoring" />
+    <option name="LAST_COMMIT_MESSAGE" value="debugging and refactoring" />
   </component>
 </project>
