@@ -4,9 +4,9 @@
 
 import jwt
 from . import api
+from .utils.auth import token_required
 from datetime import datetime, timedelta
 from flask import jsonify, request, current_app
-from .utils.auth import token_required, admin_required, merchant_required
 from ..backend.user import add_to_cart, product_review, store_feedback, remove_from_cart
 from ..backend.user import login_user, create_user, activate_user, deactivate_user, delete_user, get_cart
 
@@ -182,7 +182,7 @@ def add_product_to_cart(current_user, product_pid):
             }), 400
         return jsonify({
             'status': 'success',
-            'msg': resp[msg]
+            'msg': resp['msg']
         }), 200
     except Exception as e:
         return jsonify({
@@ -204,14 +204,13 @@ def remove_product_from_cart(current_user, product_pid):
             }), 400
         return jsonify({
             'status': 'success',
-            'msg': resp[msg]
+            'msg': resp["msg"]
         }), 200
     except Exception as e:
         return jsonify({
             'status': 'error',
             'msg': e
         }), 500
-
 
 
 @api.route('/get_cart', methods=['GET'])
@@ -252,7 +251,7 @@ def review_product(current_user, product_pid):
             }), 400
         return jsonify({
             'status': 'success',
-            'msg': resp[msg]
+            'msg': resp["msg"]
         }), 201
     except Exception as e:
         return jsonify({
@@ -277,7 +276,7 @@ def feedback_store(current_user, merchant_pid):
             }), 400
         return jsonify({
             'status': 'success',
-            'msg': resp[msg]
+            'msg': resp['msg']
         }), 201
     except Exception as e:
         return jsonify({

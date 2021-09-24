@@ -12,5 +12,3 @@ def index():
         'msg': 'You are connected!'
     }), 200
 
-
-

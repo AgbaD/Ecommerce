@@ -5,10 +5,11 @@
 import jwt
 from . import api
 from datetime import datetime, timedelta
+from .utils.auth import merchant_required
 from flask import jsonify, request, current_app
-from .utils.auth import token_required, admin_required, merchant_required
-from ..backend.merchant import activate_merchant, create_product, update_product, delete_product, delete_merchant
-from ..backend.merchant import create_merchant, create_store, add_merchant_id, login_merchant, deactivate_merchant
+from ..backend.merchant import get_all_feedback, delete_merchant, deactivate_merchant
+from ..backend.merchant import create_merchant, create_store, add_merchant_id, login_merchant
+from ..backend.merchant import activate_merchant, create_product, update_product, delete_product
 
 
 # Merchant
@@ -215,7 +216,6 @@ def add_product(merchant):
         merchant_id = merchant.id
 
         prod = {
-            'merchant_id': merchant_id,
             'name': name,
             'description': description,
             'price': price,
@@ -224,7 +224,7 @@ def add_product(merchant):
             'tags': tags
         }
 
-        resp = create_product(prod)
+        resp = create_product(merchant_id, prod)
         if resp['status'] != 'success':
             return jsonify({
                 'status': 'error',
@@ -248,6 +248,8 @@ def edit_product(merchant, product_pid):
     try:
         data = request.get_json()
         info = {}
+
+        merchant_id = merchant.id
         
         if data['name']:
             info['name'] = data['name']
@@ -262,7 +264,7 @@ def edit_product(merchant, product_pid):
         if data['tags']:
             info['tags'] = data['tags']
 
-        resp = update_product(product_pid, info)
+        resp = update_product(merchant_id, product_pid, info)
         if resp['status'] != 'success':
             return jsonify({
                 'status': 'error',
@@ -284,7 +286,7 @@ def edit_product(merchant, product_pid):
 def product_delete(merchant, product_pid):
     try:
         merchant_id = merchant.id
-        resp =  delete_product(product_pid, merchant_id)
+        resp = delete_product(product_pid, merchant_id)
         if resp['status'] != 'success':
             return jsonify({
                 'status': 'error',
@@ -322,5 +324,3 @@ def merchant_feedback(merchant):
             'status': 'error',
             'msg': e
         }), 500
-
-    

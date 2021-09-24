@@ -104,9 +104,9 @@ def activate_user(info):
 
     if user.active:
         return {
-        'status': 'success',
-        'msg': 'User already active'
-    }
+            'status': 'success',
+            'msg': 'User already active'
+        }
 
     user.active = True
     db.session.add(user)
@@ -302,4 +302,4 @@ def store_feedback(user_pid, merchant_pid, feedback):
         'status': 'success',
         'msg': 'Feedback sent successfully!'
     }
-    
+

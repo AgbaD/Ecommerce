@@ -137,7 +137,7 @@ def get_all_stores():
     }
 
 
-def get_all_products_from_store(store_pid):
+def get_all_products_from_store(store_id):
     products = Product.query.filter_by(store_id=store_id).all()
     if not products:
         return {
@@ -169,7 +169,7 @@ def get_all_products_from_store(store_pid):
 
 
 def get_product_reviews(product_pid):
-    product = Product.query.filter_by(public_id=product_id).first()
+    product = Product.query.filter_by(public_id=product_pid).first()
     if not product:
         return {
             'status': 'error',
@@ -249,7 +249,8 @@ def search_store(query):
             'stores': stores
         }
     }
-    
+
+
 def search_category(query):
     result = Category.query.msearch(query, fields=['name'], limit=50).all()
     if not result:
@@ -264,4 +265,4 @@ def search_category(query):
             'categories': all_categories
         }
     }
-    
+
