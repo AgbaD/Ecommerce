@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ae4d48a7-a4a5-4b1e-9562-57719894963e" name="Default Changelist" comment="refactoring">
+    <list default="true" id="ae4d48a7-a4a5-4b1e-9562-57719894963e" name="Default Changelist" comment="debugging">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ecom/app/api/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/ecom/app/api/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ecom/app/api/merchant.py" beforeDir="false" afterPath="$PROJECT_DIR$/ecom/app/api/merchant.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ecom/app/api/product.py" beforeDir="false" afterPath="$PROJECT_DIR$/ecom/app/api/product.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ecom/app/api/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/ecom/app/api/user.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ecom/app/backend/merchant.py" beforeDir="false" afterPath="$PROJECT_DIR$/ecom/app/backend/merchant.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ecom/app/backend/product.py" beforeDir="false" afterPath="$PROJECT_DIR$/ecom/app/backend/product.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ecom/app/backend/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/ecom/app/backend/user.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -270,7 +265,14 @@
       <option name="project" value="LOCAL" />
       <updated>1632494687486</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="debugging">
+      <created>1632496936491</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1632496936491</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -308,6 +310,7 @@
     <MESSAGE value="start the refactoring. Add comments for better understanding, refactor to indexes instead of names. cryptography" />
     <MESSAGE value="start the refactoring. Add comments for better understanding, refactor to indexes instead of names. cryptography || keep it up" />
     <MESSAGE value="refactoring" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactoring" />
+    <MESSAGE value="debugging" />
+    <option name="LAST_COMMIT_MESSAGE" value="debugging" />
   </component>
 </project>

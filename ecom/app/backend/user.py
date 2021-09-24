@@ -5,7 +5,7 @@
 import uuid
 from .. import db
 from .utils.schema import validate_user
-from ..models import User, Product, Feedback, Merchant
+from ..models import User, Product, Feedback, Merchant, Store
 from werkzeug.security import generate_password_hash, check_password_hash
 
 
@@ -222,7 +222,7 @@ def get_cart(user_pid):
     f_cart = user.cart
     if not f_cart:
         return {
-            'status': 'error',
+            'status': 'success',
             'msg': 'User cart is empty'
         }
 
@@ -275,7 +275,7 @@ def product_review(user_pid, product_pid, review):
     }
 
 
-def store_feedback(user_pid, merchant_pid, feedback):
+def store_feedback(user_pid, store_pid, feedback):
     user = User.query.filter_by(public_id=user_pid).first()
     if not user:
         return {
@@ -283,14 +283,14 @@ def store_feedback(user_pid, merchant_pid, feedback):
             'msg': 'User not found'
         }
 
-    merchant = Merchant.query.filter_by(public_id=merchant_pid).first()
-    if not merchant:
+    store = Store.query.filter_by(public_id=store_pid).first()
+    if not store:
         return {
             'status': 'error',
-            'msg': 'Merchant not found'
+            'msg': 'Store not found'
         }
 
-    merchant_id = merchant.id
+    merchant_id = store.merchant_id
     feedback = Feedback(
         user=user.fullname,
         merchant_id=merchant_id,

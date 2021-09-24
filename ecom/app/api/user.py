@@ -213,9 +213,9 @@ def remove_product_from_cart(current_user, product_pid):
         }), 500
 
 
-@api.route('/get_cart', methods=['GET'])
+@api.route('/user/get_cart', methods=['GET'])
 @token_required
-def fethch_cart(current_user):
+def fetch_cart(current_user):
     try:
         user_pid = current_user.public_id
         resp = get_cart(user_pid)
@@ -260,15 +260,15 @@ def review_product(current_user, product_pid):
         }), 500
 
 
-@api.route('/user/feedback/<merchant_pid>', methods=['POST'])
+@api.route('/user/feedback/<store_pid>', methods=['POST'])
 @token_required
-def feedback_store(current_user, merchant_pid):
+def feedback_store(current_user, store_pid):
     try:
         data = request.get_json()
         feedback = data['feedback']
 
         user_pid = current_user.public_id
-        resp = store_feedback(user_pid, merchant_pid, feedback)
+        resp = store_feedback(user_pid, store_pid, feedback)
         if resp['status'] != 'success':
             return jsonify({
                 'status': 'error',
