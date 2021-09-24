@@ -3,6 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="ae4d48a7-a4a5-4b1e-9562-57719894963e" name="Default Changelist" comment="start the refactoring. Add comments for better understanding, refactor to indexes instead of names. cryptography || keep it up">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ecom/app/backend/utils/schema.py" beforeDir="false" afterPath="$PROJECT_DIR$/ecom/app/backend/utils/schema.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ecom/app/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/ecom/app/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ecom/msearch/stores/_MAIN_25.toc" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,7 +39,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../grubix" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RecentsManager">

@@ -97,7 +97,7 @@ userDb = {
 def validate_user(data):
     try:
         validate(data, userDb)
-        return {'mag': 'success'}
+        return {'msg': 'success'}
     except SchemaError as e:
         return {'msg': 'error', 'error': e.message}
     except ValidationError as e:
