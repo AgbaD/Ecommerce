@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ae4d48a7-a4a5-4b1e-9562-57719894963e" name="Default Changelist" comment="start the refactoring. Add comments for better understanding, refactor to indexes instead of names. cryptography || keep it up">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="ae4d48a7-a4a5-4b1e-9562-57719894963e" name="Default Changelist" comment="debugging" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -36,7 +34,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../grubix" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RecentsManager">
@@ -256,7 +254,28 @@
       <option name="project" value="LOCAL" />
       <updated>1628654008203</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="refactoring">
+      <created>1632494687486</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1632494687486</updated>
+    </task>
+    <task id="LOCAL-00027" summary="debugging">
+      <created>1632496936491</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1632496936491</updated>
+    </task>
+    <task id="LOCAL-00028" summary="debugging and refactoring">
+      <created>1632501993366</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1632501993366</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -293,6 +312,9 @@
     <MESSAGE value="creating products" />
     <MESSAGE value="start the refactoring. Add comments for better understanding, refactor to indexes instead of names. cryptography" />
     <MESSAGE value="start the refactoring. Add comments for better understanding, refactor to indexes instead of names. cryptography || keep it up" />
-    <option name="LAST_COMMIT_MESSAGE" value="start the refactoring. Add comments for better understanding, refactor to indexes instead of names. cryptography || keep it up" />
+    <MESSAGE value="refactoring" />
+    <MESSAGE value="debugging" />
+    <MESSAGE value="debugging and refactoring" />
+    <option name="LAST_COMMIT_MESSAGE" value="debugging and refactoring" />
   </component>
 </project>

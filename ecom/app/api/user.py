@@ -4,9 +4,9 @@
 
 import jwt
 from . import api
+from .utils.auth import token_required
 from datetime import datetime, timedelta
 from flask import jsonify, request, current_app
-from .utils.auth import token_required, admin_required, merchant_required
 from ..backend.user import add_to_cart, product_review, store_feedback, remove_from_cart
 from ..backend.user import login_user, create_user, activate_user, deactivate_user, delete_user, get_cart
 
@@ -182,7 +182,7 @@ def add_product_to_cart(current_user, product_pid):
             }), 400
         return jsonify({
             'status': 'success',
-            'msg': resp[msg]
+            'msg': resp['msg']
         }), 200
     except Exception as e:
         return jsonify({
@@ -204,7 +204,7 @@ def remove_product_from_cart(current_user, product_pid):
             }), 400
         return jsonify({
             'status': 'success',
-            'msg': resp[msg]
+            'msg': resp["msg"]
         }), 200
     except Exception as e:
         return jsonify({
@@ -213,10 +213,9 @@ def remove_product_from_cart(current_user, product_pid):
         }), 500
 
 
-
-@api.route('/get_cart', methods=['GET'])
+@api.route('/user/get_cart', methods=['GET'])
 @token_required
-def fethch_cart(current_user):
+def fetch_cart(current_user):
     try:
         user_pid = current_user.public_id
         resp = get_cart(user_pid)
@@ -252,7 +251,7 @@ def review_product(current_user, product_pid):
             }), 400
         return jsonify({
             'status': 'success',
-            'msg': resp[msg]
+            'msg': resp["msg"]
         }), 201
     except Exception as e:
         return jsonify({
@@ -261,15 +260,15 @@ def review_product(current_user, product_pid):
         }), 500
 
 
-@api.route('/user/feedback/<merchant_pid>', methods=['POST'])
+@api.route('/user/feedback/<store_pid>', methods=['POST'])
 @token_required
-def feedback_store(current_user, merchant_pid):
+def feedback_store(current_user, store_pid):
     try:
         data = request.get_json()
         feedback = data['feedback']
 
         user_pid = current_user.public_id
-        resp = store_feedback(user_pid, merchant_pid, feedback)
+        resp = store_feedback(user_pid, store_pid, feedback)
         if resp['status'] != 'success':
             return jsonify({
                 'status': 'error',
@@ -277,7 +276,7 @@ def feedback_store(current_user, merchant_pid):
             }), 400
         return jsonify({
             'status': 'success',
-            'msg': resp[msg]
+            'msg': resp['msg']
         }), 201
     except Exception as e:
         return jsonify({

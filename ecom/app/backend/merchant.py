@@ -217,7 +217,16 @@ def delete_merchant(merchant_id):
             'status': 'error',
             'msg': "Merchant not found"
         }
+    store_id = merchant.store_id
+    store = Store.query.filter_by(id=store_id).first()
+    if not store:
+        return {
+            'status': 'error',
+            'msg': "Store not found"
+        }
+        
     db.session.delete(merchant)
+    db.session.delete(store)
     db.session.commit()
     return {
         "status": 'success',
@@ -264,14 +273,13 @@ def login_merchant(data):
     }
 
 
-def create_product(data):
+def create_product(merchant_id, data):
     if not data:
         return {
             'status': 'error',
             'msg': "data not found"
         }
     try:
-        merchant_id = data['merchant_id']
         name = data['name']
         description = data['description']
         price = data['price']
@@ -331,6 +339,7 @@ def create_product(data):
     )
 
     cate = Category.query.filter_by(name=category).first()
+    cat = None
     if not cate:
         cat = Category(
             name=category
@@ -346,13 +355,20 @@ def create_product(data):
     }
 
 
-def update_product(product_pid, data):
+def update_product(merchant_id, product_pid, data):
     product = Product.query.filter_by(public_id=product_pid).first()
     if not product:
         return {
             'status': 'error',
             'msg': 'Product not found'
         }
+
+    if product.merchant_id != merchant_id:
+        return {
+            'status': 'error',
+            'msg': 'Product update not allowed for current user'
+        }
+
     try:
         name = data['name']
         product.name = name
@@ -377,6 +393,7 @@ def update_product(product_pid, data):
     except Exception:
         pass
 
+    cat = None
     try:
         category = data['category'].lower()
         cate = Category.query.filter_by(name=category).first()
@@ -405,7 +422,7 @@ def update_product(product_pid, data):
 
 
 def delete_product(product_pid, merchant_id):
-    product = product.query.filter_by(public_id=product_pid).first()
+    product = Product.query.filter_by(public_id=product_pid).first()
     if not product:
         return {
             'status': 'error',

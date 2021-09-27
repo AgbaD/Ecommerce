@@ -13,7 +13,7 @@ class Merchant(db.Model):
     first_name = db.Column(db.String(128))
     last_name = db.Column(db.String(128))
     email = db.Column(db.String(128))
-    phone = db.Column(db.PickleType)
+    phone = db.Column(db.String)
     password_hash = db.Column(db.String(256))
     active = db.Column(db.Boolean, default=True)
     admin_active_remark = db.Column(db.Boolean, default=True)
@@ -21,6 +21,7 @@ class Merchant(db.Model):
 
 class Store(db.Model):
     __tablename__ = "stores"
+    __searchable__ = ['name', 'tags']
     id = db.Column(db.Integer, primary_key=True)
     public_id = db.Column(db.String(256))
     merchant_id = db.Column(db.Integer, default=None)
@@ -28,19 +29,20 @@ class Store(db.Model):
     description = db.Column(db.String(256))
     tags = db.Column(db.String(128))
     date_created = db.Column(db.DateTime, default=datetime.utcnow())
-    active = db.Column(db.Boolean, default=False)
+    active = db.Column(db.Boolean, default=True)
     is_verified = db.Column(db.Boolean, default=False)
 
 
 class Product(db.Model):
     __tablename__ = "products"
+    __searchable__ = ['name', 'tags', 'category']
     id = db.Column(db.Integer, primary_key=True)
     public_id = db.Column(db.String(256))
     merchant_id = db.Column(db.Integer)
     store_id = db.Column(db.Integer)
     name = db.Column(db.String(128))
     description = db.Column(db.String(512))
-    price = db.Column(db.Integer)
+    price = db.Column(db.String)
     denomination = db.Column(db.String(8))
     category = db.Column(db.String(128))
     tags = db.Column(db.String(128))
@@ -49,6 +51,7 @@ class Product(db.Model):
 
 class Category(db.Model):
     __tablename__ = "category"
+    __searchable__ = ['name']
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64))
 
@@ -68,7 +71,7 @@ class User(db.Model):
     public_id = db.Column(db.String(256))
     email = db.Column(db.String(128))
     fullname = db.Column(db.String(128))
-    phone = db.Column(db.Integer)
+    phone = db.Column(db.String)
     address = db.Column(db.String(256))
     password_hash = db.Column(db.String(256))
     cart = db.Column(db.PickleType)
