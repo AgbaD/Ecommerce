@@ -1,5 +1,5 @@
-# Ecom
-A Multi vendor ecommerce API
+# Ecommerce
+A Multi vendor ecommercemerce API
 
 ## Base URL
 
