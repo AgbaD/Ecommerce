@@ -1,7 +1,7 @@
 # Ecommerce
 A Multi vendor ecommercemerce API
 
-## Base URL
+## URL
 
 ## API Documentation
 
