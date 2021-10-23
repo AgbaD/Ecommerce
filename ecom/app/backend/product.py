@@ -175,21 +175,16 @@ def get_product_reviews(product_pid):
             'status': 'error',
             'msg': "Product not found"
         }
-    reviews = product.reviews
+    reviews = product.get_reviews()
     if not reviews:
         return {
             'status': 'error',
             'msg': "Product does not have reviews"
         }
-    all_reviews = {}
-    i = 0
-    for rev in reviews:
-        all_reviews[i] = rev
-        i += 1
     return {
             'status': 'success',
             'data': {
-                'reviews': all_reviews
+                'reviews': reviews
             }
         }
         

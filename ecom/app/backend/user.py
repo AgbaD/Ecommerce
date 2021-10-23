@@ -173,7 +173,7 @@ def add_to_cart(user_pid, product_pid):
             'msg': 'Product not found'
         }
 
-    user.cart.append(product)
+    user.add_to_cart(product_pid)
     db.session.add(user)
     db.session.commit()
     return {
@@ -197,8 +197,8 @@ def remove_from_cart(user_pid, product_pid):
             'msg': 'Product not found'
         }
 
-    if product in user.cart:
-        user.cart.remove(product)
+    if product_pid in user.get_cart():
+        user.remove_from_cart(product_pid)
         db.session.add(user)
         db.session.commit()
         return {
@@ -219,16 +219,11 @@ def get_cart(user_pid):
             'msg': 'User not found'
         }
 
-    f_cart = user.cart
-    if not f_cart:
-        return {
-            'status': 'success',
-            'msg': 'User cart is empty'
-        }
-
     cart = {}
+    cart_fdb = user.get_cart()
+    products = [Product.query.filter_by(id=i).first() for i in cart_fdb]
     i = 0
-    for prod in f_cart:
+    for prod in products:
         cart[i] = {
             'id': prod.id,
             'public_id': prod.public_id,
@@ -265,8 +260,7 @@ def product_review(user_pid, product_pid, review):
         }
 
     username = user.fullname
-    rev = {username: review}
-    product.review.append(rev)
+    product.add_review(username, review)
     db.session.add(product)
     db.session.commit()
     return {

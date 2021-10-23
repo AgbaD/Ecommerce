@@ -24,8 +24,9 @@ class Config:
     username = os.getenv('DB_USERNAME')
     password = os.getenv('DB_PASSWORD')
     dbname = os.getenv("DB_NAME")
-    SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URI") or \
-                              f"postgresql://{username}:{password}@localhost:5432/{dbname}"
+    # SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URI") or \
+    #                           f"postgresql://{username}:{password}@localhost:5432/{dbname}"
+    SQLALCHEMY_DATABASE_URI = f"sqlite:///{basedir}/ecom.db"
 
     @staticmethod
     def init_app(app):
