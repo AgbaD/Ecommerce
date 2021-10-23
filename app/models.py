@@ -1,6 +1,7 @@
 #!usr/bin/python3
 # Author:   @AgbaD || @agba_dr3
 
+import ast
 from . import db
 from datetime import datetime
 
@@ -46,7 +47,15 @@ class Product(db.Model):
     denomination = db.Column(db.String(8))
     category = db.Column(db.String(128))
     tags = db.Column(db.String(128))
-    review = db.Column(db.PickleType)
+    review = db.Column(db.String(8192), default="{}")
+
+    def add_review(self, username, review):
+        rev = ast.literal_eval(self.review)
+        rev[username] = review
+        self.review = str(rev)
+
+    def get_reviews(self):
+        return ast.literal_eval(self.review)
 
 
 class Category(db.Model):
@@ -74,9 +83,28 @@ class User(db.Model):
     phone = db.Column(db.String)
     address = db.Column(db.String(256))
     password_hash = db.Column(db.String(256))
-    cart = db.Column(db.PickleType)
+    cart = db.Column(db.String(1024), default="[]")
     active = db.Column(db.Boolean, default=True)
     is_verified = db.Column(db.Boolean, default=False)
+
+    def add_to_cart(self, product_pid):
+        if self.cart == "[]":
+            self.cart = str([product_pid])
+        else:
+            ca = ast.literal_eval(self.cart)
+            ca.append(product_pid)
+            self.cart = str(ca)
+
+    def remove_from_cart(self, product_pid):
+        if self.cart == "[]":
+            pass
+        else:
+            ca = ast.literal_eval(self.cart)
+            ca.remove(product_pid)
+            self.cart = str(ca)
+
+    def get_cart(self):
+        return ast.literal_eval(self.cart)
 
 
 class Admin(db.Model):

@@ -9,7 +9,7 @@ from ..backend.product import get_all_stores, get_all_products_from_store, get_p
 from ..backend.product import get_all_products, get_product, get_all_categories, get_category_products
 
 
-@api.route('/get_all_products', methods=['GET'])
+@api.route('/product/all', methods=['GET'])
 def fetch_all_products():
     try:
         resp = get_all_products()
@@ -29,7 +29,7 @@ def fetch_all_products():
         }), 500
 
 
-@api.route('/get_product/<product_pid>', methods=['GET'])
+@api.route('/product/<product_pid>', methods=['GET'])
 def fetch_product(product_pid):
     try:
         resp = get_product(product_pid)
@@ -49,7 +49,7 @@ def fetch_product(product_pid):
         }), 500
 
 
-@api.route('/get_all_categories', methods=['GET'])
+@api.route('/category/all', methods=['GET'])
 def fetch_all_categories():
     try:
         resp = get_all_categories()
@@ -69,7 +69,7 @@ def fetch_all_categories():
         }), 500
 
 
-@api.route('/get_category_products/<category_name>', methods=['GET'])
+@api.route('/category/<category_name>/products', methods=['GET'])
 def fetch_category_products(category_name):
     try:
         resp = get_category_products(category_name)
@@ -89,7 +89,7 @@ def fetch_category_products(category_name):
         }), 500
 
 
-@api.route('/get_all_stores', methods=['GET'])
+@api.route('/store/all', methods=['GET'])
 def fetch_all_stores():
     try:
         resp = get_all_stores()
@@ -109,7 +109,7 @@ def fetch_all_stores():
         }), 500
 
 
-@api.route('/get_all_products_from_store/<store_id>', methods=['GET'])
+@api.route('/store/<store_id>/products', methods=['GET'])
 def fetch_all_products_from_store(store_id):
     try:
         resp = get_all_products_from_store(store_id)
@@ -129,7 +129,7 @@ def fetch_all_products_from_store(store_id):
         }), 500
 
 
-@api.route('/get_product_reviews/<product_pid>', methods=['GET'])
+@api.route('/product/<product_pid>/reviews', methods=['GET'])
 def fetch_product_reviews(product_pid):
     try:
         resp = get_product_reviews(product_pid)
@@ -149,7 +149,7 @@ def fetch_product_reviews(product_pid):
         }), 500
         
 
-@api.route('/search_product/<query>', methods=['GET'])
+@api.route('/product/search/<query>', methods=['GET'])
 def product_search(query):
     try:
         resp = search_product(query)
@@ -169,7 +169,7 @@ def product_search(query):
         }), 500
         
 
-@api.route('/search_store/<query>', methods=['GET'])
+@api.route('/store/search/<query>', methods=['GET'])
 def store_search(query):
     try:
         resp = search_store(query)
@@ -189,7 +189,7 @@ def store_search(query):
         }), 500
         
 
-@api.route('/search_category/<query>', methods=['GET'])
+@api.route('/category/search/<query>', methods=['GET'])
 def category_search(query):
     try:
         resp = search_category(query)

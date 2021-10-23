@@ -22,6 +22,10 @@ def create_app(config_name):
     search.init_app(app)
     CORS(app)
 
+    if not app.debug and not app.testing:
+        from flask_sslify import SSLify
+        sslify = SSLify(app)
+
     from .api import api as api_blueprint
     app.register_blueprint(api_blueprint)
 

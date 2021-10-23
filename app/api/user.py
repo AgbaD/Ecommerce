@@ -169,7 +169,7 @@ def user_login():
         }), 500
 
 
-@api.route('/user/add_to_cart/<product_pid>', methods=['PUT'])
+@api.route('/user/cart/add/<product_pid>', methods=['PUT'])
 @token_required
 def add_product_to_cart(current_user, product_pid):
     try:
@@ -191,7 +191,7 @@ def add_product_to_cart(current_user, product_pid):
         }), 500
 
 
-@api.route('/user/remove_from_cart/<product_pid>', methods=['PUT'])
+@api.route('/user/cart/remove/<product_pid>', methods=['PUT'])
 @token_required
 def remove_product_from_cart(current_user, product_pid):
     try:
@@ -213,7 +213,7 @@ def remove_product_from_cart(current_user, product_pid):
         }), 500
 
 
-@api.route('/user/get_cart', methods=['GET'])
+@api.route('/user/cart', methods=['GET'])
 @token_required
 def fetch_cart(current_user):
     try:
@@ -226,7 +226,7 @@ def fetch_cart(current_user):
             }), 400
         return jsonify({
             'status': resp['status'],
-            'msg': resp['msg']
+            'data': resp['data']['cart']
         }), 200
     except Exception as e:
         return jsonify({
@@ -235,7 +235,7 @@ def fetch_cart(current_user):
         }), 500
 
 
-@api.route('/user/product_review/<product_pid>', methods=['POST'])
+@api.route('/user/product/<product_pid>/review', methods=['POST'])
 @token_required
 def review_product(current_user, product_pid):
     try:

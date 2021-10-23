@@ -200,7 +200,7 @@ def merchant_login():
         }), 500
 
 
-@api.route("/merchant/create_product", methods=['POST'])
+@api.route("/merchant/product/create", methods=['POST'])
 @merchant_required
 def add_product(merchant):
     try:
@@ -242,7 +242,7 @@ def add_product(merchant):
         }), 500
 
 
-@api.route('/merchant/update_product/<product_pid>', methods=['POST'])
+@api.route('/merchant/product/<product_pid>/update', methods=['POST'])
 @merchant_required
 def edit_product(merchant, product_pid):
     try:
@@ -281,7 +281,7 @@ def edit_product(merchant, product_pid):
         }), 500
 
 
-@api.route('/merchant/delete_product/<product_pid>', methods=['DELETE'])
+@api.route('/merchant/product/<product_pid>/delete', methods=['DELETE'])
 @merchant_required
 def product_delete(merchant, product_pid):
     try:
