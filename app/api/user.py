@@ -226,7 +226,7 @@ def fetch_cart(current_user):
             }), 400
         return jsonify({
             'status': resp['status'],
-            'msg': resp['msg']
+            'data': resp['data']['cart']
         }), 200
     except Exception as e:
         return jsonify({
