@@ -3,20 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="ae4d48a7-a4a5-4b1e-9562-57719894963e" name="Default Changelist" comment="debugging">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ecom/app/api/merchant.py" beforeDir="false" afterPath="$PROJECT_DIR$/ecom/app/api/merchant.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ecom/app/api/product.py" beforeDir="false" afterPath="$PROJECT_DIR$/ecom/app/api/product.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ecom/app/api/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/ecom/app/api/user.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ecom/app/backend/product.py" beforeDir="false" afterPath="$PROJECT_DIR$/ecom/app/backend/product.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ecom/app/backend/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/ecom/app/backend/user.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ecom/app/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/ecom/app/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ecom/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/ecom/config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ecom/msearch/products/_MAIN_4.toc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ecom/msearch/stores/MAIN_0duh6iudcu1c6k23.seg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ecom/msearch/stores/MAIN_69zmeejowfy3kjg6.seg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ecom/msearch/stores/MAIN_8imxwy1dkuiv1r8y.seg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ecom/msearch/stores/MAIN_pt6ycfw0smc5hizt.seg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ecom/msearch/stores/MAIN_xzfp7a53ofokv372.seg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ecom/msearch/stores/_MAIN_27.toc" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,7 +36,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../django/lms" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RecentsManager">
